@@ -12,7 +12,19 @@
   - orders-items
 
 #### ROUTES
-
+  - GET /login
+  - POST /login
+  - GET /orders
+  - POST /orders/add
+  - POST /orders/edit
+  - POST /orders/delete
+  - POST /orders/accept
+  - POST /orders/complete
+  - POST /items/orders/add
+  - GET  /items
+  - POST /items/edit
+  - POST /items/delete
+  - POST /items/add
 
 #### WIREFRAMES
 
