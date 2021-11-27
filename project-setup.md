@@ -11,20 +11,23 @@
   - menu items
   - orders-items
 
-#### ROUTES
-  - GET /login
-  - POST /login
-  - GET /orders
-  - POST /orders/add
-  - POST /orders/edit
-  - POST /orders/delete
-  - POST /orders/accept
-  - POST /orders/complete
-  - POST /items/orders/add
-  - GET  /items
-  - POST /items/edit
-  - POST /items/delete
-  - POST /items/add
+#### ADMIN ROUTES
+
+  - GET /login -get to login page
+  - POST /login -login
+  - GET /orders -view all orders
+  - POST /orders/:id/accept - accept order set estimate time and send text
+  - POST /orders/:id/complete - sends completion text no longer show on /orders
+
+
+  ##### CLIENT ROUTES
+  
+  - POST /:itemid -add items
+  - GET /:itemid - view details of item
+  - GET  / -main page with menu
+  - GET /orders/:id - shopping cart
+  - POST /orders/:id - checkout
+  - POST /orders/:id/edit - add/delete items
 
 #### WIREFRAMES
 
