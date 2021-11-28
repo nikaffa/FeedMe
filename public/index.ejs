@@ -12,7 +12,7 @@
 </head>
 <body>
   <header>
-    <h1>Sweat Leaf</h1>
+    <h1>Sweet Leaf</h1>
     <nav>
       <a href="index.ejs>" class= "nav">Menu</a>
       <a href="login.ejs" class="nav">Admin Login</a>
@@ -21,11 +21,14 @@
 
   </header>
   <div>
-    <div class="menu_item">
-      <img src="./images/<%= image1 %>" />
-      <h3 class="menu_item"><%= itemName1 %></h3>
-    </div>
-    <!-- copy/paste changing number for each menu item variables will be specified in js using the database -->
+    <% for (i=0; i < menu_items.length; i++) { %> 
+      <div class="menu_item">
+        <img src= "<%= menu_items[i].image%>" />
+        <h3 class="menu_item"><%= menu_items[i].name %></h3>
+        <p><%= menu_items[i].description %></p>
+      </div>  
+    <% } %>
+    <!-- save items from database as const menu_items in order for this to work -->
   </div>
   <footer>
     <h4>&copy; 2021 Veronika, Kyle, April </h4>
