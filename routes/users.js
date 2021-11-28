@@ -23,3 +23,14 @@ module.exports = (db) => {
   });
   return router;
 };
+
+//----------QUERIES-----------
+//1.Get admin from db
+`SELECT * FROM users WHERE email = admin@greens.ca`
+
+//2. Add user to db - addUser
+`INSERT INTO users(name, phone)
+  VALUES($1, $2)
+  RETURNING *;`
+
+  //3. Browse the menue - getAllItems
