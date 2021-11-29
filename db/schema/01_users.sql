@@ -16,22 +16,25 @@ CREATE TABLE items (
   image VARCHAR(255) NOT NULL
 );
 
+DROP TABLE IF EXISTS order_items CASCADE;
+CREATE TABLE order_items (
+  id SERIAL PRIMARY KEY NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  item_id INTEGER REFERENCES items(id) ON DELETE CASCADE,
+  quantity INTEGER NOT NULL DEFAULT 0
+);
+
+
 DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  order_items_id INTEGER REFERENCES order_items(id) ON DELETE CASCADE,
-  date_created TIMESTAMP NOT NULL,
-  accepted BOOLEAN NOT NULL DEFAULT FALSE,
-  estimated_completion_time TIMESTAMP NOT NULL,
-  completed BOOLEAN NOT NULL DEFAULT FALSE,
-  special_instructions TEXT,
+  order_item_id INTEGER REFERENCES order_items(id) ON DELETE CASCADE
+  created_at TIMESTAMP,
+  accepted_at TIMESTAMP,
+  completed_at TIMESTAMP,
+  special_instructions TEXT
 );
 
-DROP TABLE IF EXISTS order_items CASCADE;
-CREATE TABLE order_items (
-  id SERIAL PRIMARY KEY NOT NULL,
-  item_id INTEGER REFERENCES items(id) ON DELETE CASCADE,
-  quantity INTEGER NOT NULL DEFAULT 0
-);
+
 

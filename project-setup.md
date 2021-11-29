@@ -6,10 +6,10 @@
   - As a user I can receive notifications when my order is ready so that I'm aware of the status
 
 #### TABLES
-  - users - admins
+  - users 
   - orders
-  - menu items
-  - orders-items
+  - items (menu)
+  - order_items (shopping cart)
 
 #### ADMIN ROUTES
 
