@@ -21,32 +21,32 @@
 
   </header>
   <div>
-    <h2>Appetizers</h2>
-    <% for (i=0; i < appetizers.length; i++) { %> 
+    <h2>Bowls</h2>
+    <% for (i=0; i < bowls.length; i++) { %> 
       <div class="menu_item">
-        <img src= "<%= appetizers[i].image%>" />
-        <h3 class="menu_item"><%= appetizers[i].name %></h3>
+        <img src= "<%= bowls[i].image%>" />
+        <h3 class="menu_item"><%= bowls[i].name %></h3>
         <a href="partials/_item.ejs">See details</a>
       </div>  
     <% } %>
     <!-- save items from database as const appetizers, const entrees etc in order for this to work -->
   </div>
   <div>
-    <h2>Entrees</h2>
-    <% for (i=0; i < entrees.length; i++) { %> 
+    <h2>Salads</h2>
+    <% for (i=0; i < salads.length; i++) { %> 
       <div class="menu_item">
-        <img src= "<%= entrees[i].image%>" />
-        <h3 class="menu_item"><%= entrees[i].name %></h3>
+        <img src= "<%= salads[i].image%>" />
+        <h3 class="menu_item"><%= salads[i].name %></h3>
         <a href="partials/_item.ejs">See details</a>
       </div>  
     <% } %>
   </div>
   <div>
     <h2>Desserts</h2>
-    <% for (i=0; i < desserts.length; i++) { %> 
+    <% for (i=0; i < drinks.length; i++) { %> 
       <div class="menu_item">
-        <img src= "<%= desserts[i].image%>" />
-        <h3 class="menu_item"><%= desserts[i].name %></h3>
+        <img src= "<%= drinks[i].image%>" />
+        <h3 class="menu_item"><%= drinks[i].name %></h3>
         <a href="partials/_item.ejs">See details</a>
       </div>  
     <% } %>
