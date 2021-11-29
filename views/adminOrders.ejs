@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Leaf</title>
+</head>
+<body>
+  <%- include(partials/_header) %>
+  <!-- use js to change the text of login to logout on this page -->
+  <h2>Orders</h2>
+  <div class="container">
+    <div class="container">
+      <h3>Current Orders</h3>
+      <div class="container">
+        <h4>Order#: <%= currentOrders[i].id %></h4>
+        <%- for(j=0; j < currentOrders[i].items.length) { %>
+          <h4><%= currentOrders[i].items[i].name %></h4>
+          <h4><%= currentOrders[i].items[i].price %></h4>
+          <h4><%= currentOrders[i].items[i].quantity%></h4>
+        <% } %>
+        <form action="/complete" method="post">
+          <button type="submit">Complete</button>
+        </form>
+      </div>
+
+
+      <% } %>
+      </div>
+    </div>
+    <div class="container">
+      <h3>Incoming Orders</h3>
+      <%- for(i=0; i < incomingOrders.length; i++)  {%>
+      <div class="container">
+        <h4>Order#: <%= incomingOrders[i].id %></h4>
+        <%- for(j=0; j < incomingOrders[i].items.length) { %>
+          <h4><%= incomingOrders[i].items[i].name %></h4>
+          <h4><%= incomingOrders[i].items[i].price %></h4>
+          <h4><%= incomingOrders[i].items[i].quantity%></h4>
+        <% } %>
+        <form action="/accept" method="post">
+          <label>Set Estimated Completion</label>
+          <input type="text">
+          <button type="submit">Accept</button>
+        </form>
+      </div>
+
+
+      <% } %>
+    </div>
+  </div>
+        <!-- save orders with accepted timestamp, but no on completed as currentorders under each current order add a key items
+      with an array of all items in that order -->
+            <!-- save orders with no accepted timestamp and completed false as incomingOrders -->
+  <%- include(partials/_footer) %>
+</body>
+</html>
