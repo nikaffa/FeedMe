@@ -42,16 +42,15 @@ VALUES
 (10, 6, 12, 2),
 (11, 6, 4, 3);
 
-INSERT INTO orders(id, user_id, accepted_at, special_instructions)
-VALUES
-(1, 2, '2021-11-27 18:38:40', 'No onions please'),
-(2, 3, '2021-11-27 19:39:40', null),
-(3, 4, '2021-11-27 20:39:40', 'More onions!');
-
-
 INSERT INTO orders(id, user_id, special_instructions)
 VALUES
 (4, 5, 'No tomatoes!'),
 (5, 6, null),
 (6, 7, 'Two forks please');
+
+INSERT INTO orders(id, user_id, accepted_at, special_instructions)
+VALUES
+(1, 2, '2021-11-27 18:38:40', 'No onions please'),
+(2, 3, '2021-11-27 19:39:40', null),
+(3, 4, '2021-11-27 20:39:40', 'More onions!');
 
