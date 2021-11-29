@@ -22,13 +22,13 @@
   </header>
   <div>
     <% for (i=0; i < menu_items.length; i++) { %> 
-      <div class="menu_item">
+      <div class="menu_item <%= i %>">
         <img src= "<%= menu_items[i].image%>" />
         <h3 class="menu_item"><%= menu_items[i].name %></h3>
-        <p><%= menu_items[i].description %></p>
       </div>  
     <% } %>
     <!-- save items from database as const menu_items in order for this to work -->
+    <!-- add click listener to class i to trigger the route to :itemid -->
   </div>
   <footer>
     <h4>&copy; 2021 Veronika, Kyle, April </h4>
