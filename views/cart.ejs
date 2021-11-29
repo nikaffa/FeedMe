@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="../public/scripts/app.js"></script>
+  <script src="../public/vendor/jquery-3.0.0.js"></script>
+  <link href="../public/vendor/border-box.css" />
+  <link href="../public/vendor/normalize-4.1.1.css" />
+
+  <title>Sweet Leaf</title>
+</head>
+<body>
+  <%- include(./partials/_header) %>
+  <div class="container cart">
+
+  <%- for(i=0; i < orderItems.length; i++) { %>
+    <div>
+      <h3><%=orderItems[i].name %></h3>
+      <h3><%=orderItems[i].price %></h3>
+      <form action="/:itemid" method="post">
+        <label for="quantity">Qty</label>
+        <input type="number" min="1" max="10" name="quantity">
+        <button type="submit">Submit</button>
+        <button type="submit">Remove</button>
+        <label for="specialInstructions">Special Instructions</label>
+        <input type="text" name="specialInstructions">
+      </form>
+      <h3 class="total">Item Total</h3>
+    </div>
+  <% } %>
+    <h3 class="total">Subtotal</h3>
+    <h3 class="total">Tax</h3>
+    <h2 class="total">Total</h2>
+    <form action="/:orderid" method="post">
+      <label for='name'>Name</label>
+      <input type='text' name='name'>
+      <label for="phone">Phone Number</label>
+      <input type="text" name='phone'>
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+  <%- include(./partials/_footer) %>
+  
+</body>
+</html>
