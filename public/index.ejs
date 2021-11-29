@@ -21,14 +21,35 @@
 
   </header>
   <div>
-    <% for (i=0; i < menu_items.length; i++) { %> 
-      <div class="menu_item <%= i %>">
-        <img src= "<%= menu_items[i].image%>" />
-        <h3 class="menu_item"><%= menu_items[i].name %></h3>
+    <h2>Appetizers</h2>
+    <% for (i=0; i < appetizers.length; i++) { %> 
+      <div class="menu_item">
+        <img src= "<%= appetizers[i].image%>" />
+        <h3 class="menu_item"><%= appetizers[i].name %></h3>
+        <a href="partials/_item.ejs">See details</a>
       </div>  
     <% } %>
-    <!-- save items from database as const menu_items in order for this to work -->
-    <!-- add click listener to class i to trigger the route to :itemid -->
+    <!-- save items from database as const appetizers, const entrees etc in order for this to work -->
+  </div>
+  <div>
+    <h2>Entrees</h2>
+    <% for (i=0; i < entrees.length; i++) { %> 
+      <div class="menu_item">
+        <img src= "<%= entrees[i].image%>" />
+        <h3 class="menu_item"><%= entrees[i].name %></h3>
+        <a href="partials/_item.ejs">See details</a>
+      </div>  
+    <% } %>
+  </div>
+  <div>
+    <h2>Desserts</h2>
+    <% for (i=0; i < desserts.length; i++) { %> 
+      <div class="menu_item">
+        <img src= "<%= desserts[i].image%>" />
+        <h3 class="menu_item"><%= desserts[i].name %></h3>
+        <a href="partials/_item.ejs">See details</a>
+      </div>  
+    <% } %>
   </div>
   <footer>
     <h4>&copy; 2021 Veronika, Kyle, April </h4>
