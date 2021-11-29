@@ -10,6 +10,7 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS items CASCADE;
 CREATE TABLE items (
   id SERIAL PRIMARY KEY NOT NULL,
+  type VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   price INTEGER NOT NULL DEFAULT 0,
@@ -19,21 +20,18 @@ CREATE TABLE items (
 DROP TABLE IF EXISTS order_items CASCADE;
 CREATE TABLE order_items (
   id SERIAL PRIMARY KEY NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
   item_id INTEGER REFERENCES items(id) ON DELETE CASCADE,
   quantity INTEGER NOT NULL DEFAULT 0
 );
-
 
 DROP TABLE IF EXISTS orders CASCADE;
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  order_item_id INTEGER REFERENCES order_items(id) ON DELETE CASCADE
-  created_at TIMESTAMP,
   accepted_at TIMESTAMP,
-  completed_at TIMESTAMP,
-  special_instructions TEXT
+  special_instructions TEXT,
+  completed BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 
