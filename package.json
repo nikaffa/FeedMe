@@ -19,11 +19,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
     "pg-native": "^3.0.0",
-<<<<<<< HEAD
     "sass": "^1.44.0"
-=======
-    "sass": "^1.43.5"
->>>>>>> origin
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

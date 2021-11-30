@@ -40,14 +40,9 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
-<<<<<<< HEAD
-const widgetsRoutes = require("./routes/widgets");
-const {getMenuItems} = require("./db/db_pg");
-=======
 const ordersRoutes = require("./routes/orders");
 const cartsRoutes = require("./routes/carts");
-
->>>>>>> origin
+const {getMenuItems} = require("./db/db_pg");
 
 // Mount all resource routes
 app.use(usersRoutes(db));
