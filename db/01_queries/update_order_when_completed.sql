@@ -1,4 +1,4 @@
-INSERT INTO orders(user_id, special_instructions)
-VALUES($1, $2)
-RETURNING *;
+ALTER TABLE orders
+ALTER column completed (true)
+WHERE order_id = $1
 
