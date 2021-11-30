@@ -1,6 +1,5 @@
 // load .env data into process.env
 require("dotenv").config();
-
 // Web server config
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
@@ -10,7 +9,13 @@ const morgan = require("morgan");
 
 // PG database client/connection setup
 const { Pool } = require("pg");
-const dbParams = require("./lib/db.js");
+const dbParams = {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME
+};
 const db = new Pool(dbParams);
 db.connect();
 
@@ -38,6 +43,7 @@ const usersRoutes = require("./routes/users");
 const ordersRoutes = require("./routes/orders");
 const cartsRoutes = require("./routes/carts");
 
+
 // Mount all resource routes
 app.use(usersRoutes(db));
 app.use("/orders", ordersRoutes(db));
@@ -49,8 +55,24 @@ app.use("/carts", cartsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  res.render("index");
+  const promise1 = getMenuItems('Bowls');
+  const promise2 = getMenuItems('Salads');
+  const promise3 = getMenuItems('Drinks');
+    Promise.all([promise1, promise2, promise3]).then((all)=>{
+      const bowls = all[0].rows;
+      const salads = all[1].rows;
+      const drinks = all[2].rows;
+      console.log(bowls, salads, drinks)
+      const templateVars= {
+        bowls, salads, drinks
+      };
+      res.render("index", templateVars);
+    }).catch((err) => {
+      console.log(err.message)
+    })
+
 });
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
