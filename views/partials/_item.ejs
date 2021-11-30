@@ -1,11 +1,4 @@
-<div class="menu_item">
-  <img src= "<%= menu_items[:itemid].image%>" />
-  <h3 class="menu_item"><%= menu_items[:itemid].name %></h3>
+<div class="hide">
   <h3 class="menu_item"><%= menu_items[:itemid].price %></h3>
-  <p><%= menu_items[:itemid].description %></p>
-  <form action="/:itemid" method="post">
-    <label for="quantity">Qty</label>
-    <input type="number" min="1" max="10" name="quantity">
-    <button type="submit">Add Item to Cart</button>
-  </form>
+  <p class="hide"><%= menu_items[:itemid].description %></p>
 </div>

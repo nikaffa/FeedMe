@@ -4,11 +4,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <script src="../public/scripts/app.js"></script>
-  <script src="../public/vendor/jquery-3.0.0.js"></script>
-  <link href="../public/vendor/border-box.css" />
-  <link href="../public/vendor/normalize-4.1.1.css" />
-  <link rel='shortcut icon' type='image/jpeg' href='../docs/favicon.ico' />
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/jquery_helpers.js"></script>
+  <link rel='shortcut icon' type='image/jpeg' href='/favicon.ico' />
   <title>Sweet Leaf</title>
 </head>
 <body>
@@ -19,7 +23,15 @@
       <div class="menu_item">
         <img src= "<%= bowls[i].image%>" />
         <h3 class="menu_item"><%= bowls[i].name %></h3>
-        <a href="partials/_item.ejs">See details</a>
+        <h3 class="menu_item"><%= bowls[i].price %></h3>
+        <p class="hide bowls<%= i %>"><%= bowls[i].description %></p>
+        <form action="/:itemid" method="post">
+          <label for="quantity">Qty</label>
+          <input type="number" min="1" max="10" name="quantity">
+          <button type="submit">Add Item to Cart</button>
+        </form>
+        <h3 class='unhide bowls<%= i %>'>Details</h3>
+        <h3 class='unhide hide bowls<%= i %>'>Hide Details</h3>
       </div>  
     <% } %>
     <!-- save items from database as const bowls, const salads etc in order for this to work -->
@@ -30,7 +42,15 @@
       <div class="menu_item">
         <img src= "<%= salads[i].image%>" />
         <h3 class="menu_item"><%= salads[i].name %></h3>
-        <a href="partials/_item.ejs">See details</a>
+        <h3 class="menu_item"><%= salads[i].price %></h3>
+        <p class="hide salads<%= i %>"><%= salads[i].description %></p>
+        <form action="/:itemid" method="post">
+          <label for="quantity">Qty</label>
+          <input type="number" min="1" max="10" name="quantity">
+          <button type="submit">Add Item to Cart</button>
+        </form>
+        <h3 class='unhide salads<%= i %>'>Details</h3>
+        <h3 class='unhide hide salads<%= i %>'>Hide Details</h3>
       </div>  
     <% } %>
   </div>
@@ -40,7 +60,15 @@
       <div class="menu_item">
         <img src= "../docs/menu/0<%= i+1 %>.jpeg" >
         <h3 class="menu_item"><%= drinks[i].name %></h3>
-        <a href="partials/_item.ejs">See details</a>
+        <h3 class="menu_item"><%= drinks[i].price %></h3>
+        <p class="hide drinks<%= i %>"><%= drinks[i].description %></p>
+        <form action="/:itemid" method="post">
+          <label for="quantity">Qty</label>
+          <input type="number" min="1" max="10" name="quantity">
+          <button type="submit">Add Item to Cart</button>
+        </form>
+        <h3 class='unhide drinks<%= i %>'>Details</h3>
+        <h3 class='unhide hide drinks<%= i %>'>Hide Details</h3>
       </div>  
     <% } %>
   </div>
