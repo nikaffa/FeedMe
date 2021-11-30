@@ -42,7 +42,11 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const ordersRoutes = require("./routes/orders");
 const cartsRoutes = require("./routes/carts");
+
 const {getMenuItems} = require("./db/db_pg");
+
+
+ 
 
 // Mount all resource routes
 app.use(usersRoutes(db));
