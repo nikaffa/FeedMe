@@ -23,9 +23,9 @@
       <div class="menu_item">
         <img src= "<%= bowls[i].image%>" />
         <h3 class="menu_item"><%= bowls[i].name %></h3>
-        <h3 class="menu_item"><%= bowls[i].price %></h3>
+        <h3 class="menu_item">$<%= bowls[i].price/100 %></h3>
         <p class="hide bowls<%= i %>"><%= bowls[i].description %></p>
-        <form action="/:itemid" method="post">
+        <form action="/<%= bowls[i].id %>" method="post">
           <label for="quantity">Qty</label>
           <input type="number" min="1" max="10" name="quantity">
           <button type="submit">Add Item to Cart</button>
@@ -42,9 +42,9 @@
       <div class="menu_item">
         <img src= "<%= salads[i].image%>" />
         <h3 class="menu_item"><%= salads[i].name %></h3>
-        <h3 class="menu_item"><%= salads[i].price %></h3>
+        <h3 class="menu_item">$<%= salads[i].price/100 %></h3>
         <p class="hide salads<%= i %>"><%= salads[i].description %></p>
-        <form action="/:itemid" method="post">
+        <form action="/<%= salads[i].id %>" method="post">
           <label for="quantity">Qty</label>
           <input type="number" min="1" max="10" name="quantity">
           <button type="submit">Add Item to Cart</button>
@@ -60,9 +60,9 @@
       <div class="menu_item">
         <img src= "../docs/menu/0<%= i+1 %>.jpeg" >
         <h3 class="menu_item"><%= drinks[i].name %></h3>
-        <h3 class="menu_item"><%= drinks[i].price %></h3>
+        <h3 class="menu_item">$<%= drinks[i].price/100 %></h3>
         <p class="hide drinks<%= i %>"><%= drinks[i].description %></p>
-        <form action="/:itemid" method="post">
+        <form action="/<%= drinks[i].id %>" method="post">
           <label for="quantity">Qty</label>
           <input type="number" min="1" max="10" name="quantity">
           <button type="submit">Add Item to Cart</button>
