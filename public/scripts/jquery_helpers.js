@@ -11,6 +11,15 @@ $('document').ready(
     $('.unhide.bowls2').on('click', function() {
       $('.bowls2').toggleClass('hide')
     })
+    $('.unhide.bowls3').on('click', function() {
+      $('.bowls3').toggleClass('hide')
+    })
+    $('.unhide.bowls4').on('click', function() {
+      $('.bowls4').toggleClass('hide')
+    })
+    $('.unhide.bowls5').on('click', function() {
+      $('.bowls5').toggleClass('hide')
+    })
     $('.unhide.salads0').on('click', function() {
       $('.salads0').toggleClass('hide')
     })
