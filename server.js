@@ -6,6 +6,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cookieParser = require('cookie-parser');
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -38,44 +39,55 @@ app.use(
 
 app.use(express.static("public"));
 
+app.use(cookieParser());
+
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const ordersRoutes = require("./routes/orders");
 const cartsRoutes = require("./routes/carts");
-
-const {getMenuItems} = require("./db/db_pg");
-
-
- 
+const { getMenuItems } = require("./db/db_pg");
 
 // Mount all resource routes
 app.use(usersRoutes(db));
 app.use("/orders", ordersRoutes(db));
 app.use("/carts", cartsRoutes(db));
 
-
-// Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
-
+// Home page FOR PARTICULAR USER
 app.get("/", (req, res) => {
-  const promise1 = getMenuItems('Bowls');
-  const promise2 = getMenuItems('Salads');
-  const promise3 = getMenuItems('Drinks');
-    Promise.all([promise1, promise2, promise3]).then((all)=>{
+  const promises = [
+    getMenuItems('Bowls'),
+    getMenuItems('Salads'),
+    getMenuItems('Drinks'),
+  ];
+  if (req.cookies.user_id) {
+    const userId = req.cookies.user_id;
+    const query = `
+    SELECT * FROM order_items
+    JOIN orders ON orders.id = order_id
+    WHERE user_id = ${userId}`;
+    promises.push(
+      db.query(query)
+        .then(data => data.rows)
+        .catch(error => error));
+  }
+
+  Promise.all(promises)
+    .then((all) => {
       const bowls = all[0].rows;
       const salads = all[1].rows;
       const drinks = all[2].rows;
-      console.log(bowls, salads, drinks)
-      const templateVars= {
+      console.log(bowls, salads, drinks);
+      //const userOrders = user_id_cookie ? all[3].rows : []
+      const templateVars = {
         bowls, salads, drinks
       };
-      res.render("index", templateVars);
-    }).catch((err) => {
-      console.log(err.message)
-    })
-
+      res.render('index', templateVars);
+    }).
+    catch((err) => {
+      console.log(err.message);
+    });
 });
+
 
 
 app.listen(PORT, () => {
