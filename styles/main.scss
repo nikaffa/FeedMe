@@ -3,8 +3,8 @@ $main-color: #E8EBF7;
 $accent-color1: #386641;
 $accent-color2: #6A994E;
 $accent-color3: #704C5E;
-$header-font: "EB Garamond";
-$main-font: helvetica;
+$header-font: 'Nunito Sans', sans-serif;
+$main-font: "EB Garamond";
 
 body {
   justify-content: center;
@@ -37,6 +37,7 @@ header a {
   color: $main-color;
   padding: 5px;
   text-decoration: none;
+  font-size: 1em;
 }
 
 header a:hover {
@@ -56,6 +57,23 @@ div {
   font-family: $main-font;
 }
 
-h2 {
+h1, h2, h3 {
   font-family: $header-font;
+  font-weight: 500;
+}
+
+div.menu {
+  font-family: $header-font;
+}
+
+div.menu a {
+  color: $accent-color1;
+  text-decoration: none;
+  font-family: $header-font;
+  font-size: 1.5em;
+
+}
+div.menu a:hover {
+  color: $accent-color2;
+
 }
