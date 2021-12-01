@@ -9,8 +9,19 @@ const express = require('express');
 const router  = express.Router();
 //--------------------------IN PROGRESS!!!------------------------------------
 module.exports = (db) => {
-  router.get("/:id", (req, res) => {
-    let query = `SELECT * FROM orders WHERE id = $1 WHERE type='cart'`; //pull user_id from cookie
+  router.post("/cart", (req, res) => {
+    if (req.cookies.user_id) {
+      const userId = req.cookies.user_id;
+      const query = `
+      SELECT * FROM order_items
+      JOIN orders ON orders.id = order_id
+      WHERE user_id = ${userId} AND type='cart'`;
+      promises.push(
+        db.query(query)
+          .then(data => data.rows)
+          .catch(error => error));
+    }
+    let query = `SELECT * FROM orders WHERE id = $1 WHERE type='cart'`; //pull up user_id from cookie
     let options = [req.params.id];
 
     console.log(query);
