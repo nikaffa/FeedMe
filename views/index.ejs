@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
@@ -17,9 +17,19 @@
 </head>
 <body>
   <%- include('./partials/_header') %>
-  <div>
+
+  <div class = "menu">
+    <h3>Menu</h3>
+    <div class="menu-links">
+    <a href="#bowls">Bowls</a>
+    <a href="#salads">Salads</a>
+    <a href="#drinks">Drinks</a>
+  </div>
+
+  </div>
+  <div id = "bowls">
     <h2>Bowls</h2>
-    <% for (i=0; i < bowls.length; i++) { %> 
+    <% for (i=0; i < bowls.length; i++) { %>
       <div class="menu_item">
         <img src= "<%= bowls[i].image%>" />
         <h3 class="menu_item"><%= bowls[i].name %></h3>
@@ -32,13 +42,13 @@
         </form>
         <h3 class='unhide bowls<%= i %>'>Details</h3>
         <h3 class='unhide hide bowls<%= i %>'>Hide Details</h3>
-      </div>  
+      </div>
     <% } %>
     <!-- save items from database as const bowls, const salads etc in order for this to work -->
   </div>
   <div>
     <h2>Salads</h2>
-    <% for (i=0; i < salads.length; i++) { %> 
+    <% for (i=0; i < salads.length; i++) { %>
       <div class="menu_item">
         <img src= "<%= salads[i].image%>" />
         <h3 class="menu_item"><%= salads[i].name %></h3>
@@ -51,12 +61,12 @@
         </form>
         <h3 class='unhide salads<%= i %>'>Details</h3>
         <h3 class='unhide hide salads<%= i %>'>Hide Details</h3>
-      </div>  
+      </div>
     <% } %>
   </div>
   <div>
     <h2>Drinks</h2>
-    <% for (i=0; i < drinks.length; i++) { %> 
+    <% for (i=0; i < drinks.length; i++) { %>
       <div class="menu_item">
         <img src= "../docs/menu/0<%= i+1 %>.jpeg" >
         <h3 class="menu_item"><%= drinks[i].name %></h3>
@@ -69,7 +79,7 @@
         </form>
         <h3 class='unhide drinks<%= i %>'>Details</h3>
         <h3 class='unhide hide drinks<%= i %>'>Hide Details</h3>
-      </div>  
+      </div>
     <% } %>
   </div>
   <%- include('partials/_footer') %>

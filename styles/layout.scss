@@ -7,21 +7,53 @@ html {
 
 header {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  color: 
+  padding-right: 5%;
+  padding-left: 5%;
+  background-color: green;
+
+}
+.logo {
+  display: flex;
+  align-items: center;
+
 }
 
-.bowls {
+.nav {
+  display: inline-block;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20%;
+  margin-left: 5%
+
+}
+
+.menu-links a {
+  display: inline-block;
+  padding: 10px 150px;
+  text-decoration: none;
+}
+
+
+
+.bowls-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between
 }
 
-.menu-item {
+.menu_item {
   flex: 0 32%;
   height: 100px;
   margin-bottom: 2%;
+  border: 2px solid black;
 }
 
 .salads {
