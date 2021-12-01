@@ -58,7 +58,7 @@
     <h2>Drinks</h2>
     <% for (i=0; i < drinks.length; i++) { %> 
       <div class="menu_item">
-        <img src= "../docs/menu/0<%= i+1 %>.jpeg" >
+        <img src= "<%= drinks[i].image %>" >
         <h3 class="menu_item"><%= drinks[i].name %></h3>
         <h3 class="menu_item">$<%= drinks[i].price/100 %>.00</h3>
         <p class="hide drinks<%= i %>"><%= drinks[i].description %></p>
