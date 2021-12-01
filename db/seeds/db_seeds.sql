@@ -1,3 +1,4 @@
+
 -- Users table seeds here (Example)
 -- Widgets table seeds here (Example)
 INSERT INTO users(id, name, phone, admin)
