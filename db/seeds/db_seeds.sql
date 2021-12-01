@@ -35,7 +35,27 @@ VALUES
 (2, 3, 'cart'),
 (3, 4, 'cart');
 
+INSERT INTO orders(id, user_id, special_instructions, type)
+VALUES
+(4, 5, 'No oinions please', 'order'),
+(5, 6, 'More oinions!', 'order');
 
+INSERT INTO order_items(id, item_id, order_id, quantity)
+VALUES
+(1, 1, 4, 1),
+(2, 2, 4, 2),
+(3, 3, 4, 1),
+(4, 4, 5, 10);
 
+INSERT INTO orders(id, user_id, type, accepted_at)
+VALUES
+(6, 7, 'order', Now()),
+(7, 7, 'order', Now());
 
+INSERT INTO order_items(id, item_id, order_id, quantity)
+VALUES
+(5, 6, 6, 1),
+(6, 7, 6, 2),
+(7, 8, 7, 1),
+(8, 9, 7, 100);
 
