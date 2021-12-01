@@ -42,11 +42,9 @@
     <h3 class="total">Subtotal</h3>
     <h3 class="total">Tax</h3>
     <h2 class="total">Total</h2>
+    <h2><%= user.name %></h2>
+    <h2><%= user.phone %></h2>
     <form action="/:orderid" method="post">
-      <label for='name'>Name</label>
-      <input type='text' name='name'>
-      <label for="phone">Phone Number</label>
-      <input type="text" name='phone'>
       <button type="submit">Place Order</button>
     </form>
   </div>
