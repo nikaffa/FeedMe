@@ -12,24 +12,27 @@
   - order_items (shopping cart)
 
 #### ADMIN ROUTES
+  - ??????GET /login/:id -login as a current user (or admin), returns main page with menu, returns a lists of all items DO WE NEET LOGIN FOR ADMIN?
+
   - GET /orders - view all orders
   - POST /orders/:id/accept - accept order, set estimate time and send text msg
   - POST /orders/:id/complete - send completion time, text msg, no longer show on /orders
 
-  ##### CLIENT ROUTES
-  - GET /login/:id -login as a current user (or admin), returns main page with menu, returns a lists of all items
+##### CLIENT ROUTES
+ - ??????GET /login/:id -login as a current user, set up a cookie??, redirects to main page
+  - GET / - main page with menu, returns a lists of all items
 
   menu:
   - GET /:itemid - view details of item
   - POST /:itemid - add item & quantity to shopping cart 
 
   cart:
-  - GET /cart/:id - shopping cart
-  - DELETE /cart/:id/delete - delete item from shopping cart
-  - POST /cart/:id - checkout
+  - GET /cart - shopping cart
+  - DELETE /cart/delete - delete item from shopping cart
+  - POST /cart/ - checkout
 
 ##### WORKFLOW
-1. When user logs in - select * from orders where type='cart' and user_id = $userId. Set up cookie session
+1. When user logs in - select * from orders where type='cart' and user_id = $userId. Set up cookie session?
    If result empty (no cart) - create new order with type='cart'
 
 2. When click "add to order": 1) select cart for this user; 2) add new item to this cart (POST /:itemid)

@@ -10,29 +10,51 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM orders`; // todo: where type='order'
+    let query = `SELECT * FROM orders WHERE type='order'`;
     console.log(query);
     db.query(query)
       .then(data => {
         const orders = data.rows;
-        res.json({ orders });
+        const templateVars = { orders };
+        res.render("adminOrders", templateVars);
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
+
   });
 
-  router.get("/:id", (req, res) => {
-    let query = `SELECT * FROM orders WHERE id = $1`; // todo same
-    let options = [req.params.id];
+  // router.post("/:id/accept", (req, res) => { // (user_id, type) values($1, 'cart')
+  //   let query = `INSERT INTO orders(user_id)
+  //   VALUES($1)
+  //   RETURNING *;`;
+  //   let options = [req.body.id];
 
+  //   console.log(query);
+  //   db.query(query, options)
+  //     .then(data => {
+  //       const orders = data.rows;
+  //       res.json({ orders });
+  //     })
+  //     .catch(err => {
+  //       res
+  //         .status(500)
+  //         .json({ error: err.message });
+  //     });
+  // });
+
+  router.post("/:id/accept", (req, res) => { //if accepted
+    let query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP
+    WHERE id = $1 AND type = 'order'`;
+    let options = [req.params.id]; //order.id??
     console.log(query);
     db.query(query, options)
       .then(data => {
-        const orders = data.rows;
-        res.json({ orders });
+        const order = data.rows;
+        res.json({ order });
+        //update at front-end and send 1st notification
       })
       .catch(err => {
         res
@@ -40,18 +62,16 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
-  router.post("/", (req, res) => { // (user_id, type) values($1, 'cart')
-    let query = `INSERT INTO orders(user_id)
-    VALUES($1)
-    RETURNING *;`;
-    let options = [req.body.id];
-
+  router.post("/:id/complete", (req, res) => { //if accepted
+    let query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP
+    WHERE id = $1 AND type = 'order'`;
+    let options = [req.params.id]; //order.id??
     console.log(query);
     db.query(query, options)
       .then(data => {
-        const orders = data.rows;
-        res.json({ orders });
+        const order = data.rows;
+        res.json({ order });
+        //update at front-end and send 2st notification
       })
       .catch(err => {
         res
@@ -60,25 +80,6 @@ module.exports = (db) => {
       });
   });
 
-  router.put("/:id", (req, res) => { //update
-    //if completed then
-    let query = `UPDATE orders SET special_instructions
-    VALUES($1) WHERE order_id = $2`;
 
-
-    let options = [req.body.special_instructions, req.params.id];
-
-    console.log(query);
-    db.query(query, options)
-      .then(data => {
-        const orders = data.rows;
-        res.json({ orders });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
   return router;
 };

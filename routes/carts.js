@@ -7,25 +7,10 @@
 
 const express = require('express');
 const router  = express.Router();
-
+//--------------------------IN PROGRESS!!!------------------------------------
 module.exports = (db) => {
-  router.get("/", (req, res) => {
-    let query = `SELECT * FROM orders`; // todo: where type='order'
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const orders = data.rows;
-        res.json({ orders });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
   router.get("/:id", (req, res) => {
-    let query = `SELECT * FROM orders WHERE id = $1`; // todo same
+    let query = `SELECT * FROM orders WHERE id = $1 WHERE type='cart'`; //pull user_id from cookie
     let options = [req.params.id];
 
     console.log(query);
@@ -41,7 +26,7 @@ module.exports = (db) => {
       });
   });
 
-  router.post("/", (req, res) => { // (user_id, type) values($1, 'cart')
+  router.post("/:id", (req, res) => { // (user_id, type) values($1, 'cart')
     let query = `INSERT INTO orders(user_id)
     VALUES($1)
     RETURNING *;`;
