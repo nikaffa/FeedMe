@@ -25,12 +25,12 @@
       <% for(i=0; i < currentOrders.length; i++)  { %>
       <div class="container">
         <h4>Order#: <%= currentOrders[i].id %></h4>
-        <% for(j=0; j < currentOrders[i].items.length; j++) { %>
+        <% for(j=0; j < currentOrders[i].items.length; j++) { %> <!--gives an error-->
           <h4><%= currentOrders[i].items[j].name %></h4>
           <h4><%= currentOrders[i].items[j].price %></h4>
           <h4><%= currentOrders[i].items[j].quantity%></h4>
         <% } %>
-        <form action="/complete" method="post">
+        <form action="/<%= currentOrders[i].id %>/complete" method="post"> <!--check the order id please-->
           <button type="submit">Complete</button>
         </form>
       </div>
@@ -43,12 +43,12 @@
       <% for(i=0; i < incomingOrders.length; i++)  { %>
       <div class="container">
         <h4>Order#: <%= incomingOrders[i].id %></h4>
-        <% for(j=0; j < incomingOrders[i].items.length; j++) { %>
+        <% for(j=0; j < incomingOrders[i].items.length; j++) { %> <!--gives an error-->
           <h4><%= incomingOrders[i].items[j].name %></h4>
           <h4><%= incomingOrders[i].items[j].price %></h4>
           <h4><%= incomingOrders[i].items[j].quantity%></h4>
         <% } %>
-        <form action="/accept" method="post">
+        <form action="/<%= incomingOrders[i].id %>/accept" method="post"> <!--check the order id please-->
           <label>Set Estimated Completion</label>
           <input type="text">
           <button type="submit">Accept</button>
