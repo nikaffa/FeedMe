@@ -70,7 +70,8 @@ module.exports = (db) => {
       .then(data => {
         const order = data.rows;
         res.json({ order });
-        //update at front-end and send 1st notification
+        //update at front-end
+        //send 1st notification
       })
       .catch(err => {
         res
@@ -87,7 +88,8 @@ module.exports = (db) => {
       .then(data => {
         const order = data.rows;
         res.json({ order });
-        //update at front-end and send 2st notification
+        //update at front-end
+        //ssend 2st notification
       })
       .catch(err => {
         res
