@@ -12,26 +12,37 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     const promises = [];
     let query = `
-    SELECT orders.id as incoming_orderId,  items.name, quantity, price, special_instructions FROM orders
-    JOIN order_items ON orders.id = order_id
+    SELECT orders.id AS order_id,  items.name, quantity, price, special_instructions FROM order_items
+    JOIN orders on order_id = orders.id
     JOIN items ON items.id = item_id
     WHERE orders.type='order' and accepted_at is null and completed = FALSE
-    GROUP BY incoming_orderId, quantity, items.name, items.price ORDER BY incoming_orderId`;
+    GROUP BY orders.id, quantity, items.name, items.price ORDER BY order_id`;
     promises.push(db.query(query));
     query = `
-    SELECT orders.id as current_orderId,  items.name, quantity, price, special_instructions FROM orders
+    SELECT orders.id as order_id,  items.name, quantity, price, special_instructions FROM orders
     JOIN order_items ON orders.id = order_id
     JOIN items ON items.id = item_id
     WHERE orders.type='order' and accepted_at is not null and completed = FALSE
-    GROUP BY current_orderId, quantity, items.name, items.price ORDER BY current_orderId`;
+    GROUP BY orders.id, quantity, items.name, items.price ORDER BY order_id`;
+    promises.push(db.query(query));
+
+    query = `SELECT id FROM ORDERS
+    WHERE type='order' AND accepted_at IS NULL AND completed = FALSE`
+    promises.push(db.query(query));
+    query = `SELECT id FROM ORDERS
+    WHERE type='order' AND accepted_at IS NOT NULL AND completed = FALSE`
     promises.push(db.query(query));
 
     Promise.all(promises)
       .then(all => {
-        const currentOrders = all[0].rows;
+        const currentOrders = all[1].rows;
         console.log(currentOrders);
-        const incomingOrders = all[1].rows;
-        const templateVars = { incomingOrders, currentOrders };
+        const incomingOrders = all[0].rows;
+        const currentOrderNums = all[3].rows;
+        const incomingOrderNums = all[2].rows;
+        console.log(incomingOrderNums)
+
+        const templateVars = { incomingOrders, currentOrders, currentOrderNums, incomingOrderNums };
         res.render("adminOrders", templateVars);
       })
       .catch(err => {
