@@ -4,3 +4,90 @@ body,
 html {
   margin: 0;
 }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 5%;
+  padding-left: 5%;
+  background-color: green;
+
+}
+.logo {
+  display: flex;
+  align-items: center;
+
+}
+
+.nav {
+  display: inline-block;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20%;
+  margin-left: 5%;
+  background-color: #E8EBF7;
+
+}
+
+.menu-links a {
+  display: inline-block;
+  padding: 10px 150px;
+  text-decoration: none;
+}
+
+.section_title {
+  margin-left: 5%;
+  margin-top: 5%
+}
+
+#bowls{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+  justify-content: space-between;
+  margin: auto;
+
+}
+
+
+#salads {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+  justify-content: space-between;
+  margin: auto;
+}
+
+
+#drinks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.menu_item {
+  width: 32%;
+  margin-bottom: 2%; 
+  position: relative;
+  border: 2px solid green;
+}
+
+.menu_item img {
+  width: 100%;
+}
+
+.item_info {
+  margin-left: 1%;
+}

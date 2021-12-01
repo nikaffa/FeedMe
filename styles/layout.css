@@ -1,0 +1,35 @@
+body,
+html {
+  margin: 0;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: green;
+}
+
+.bowls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.menu-item {
+  flex: 0 32%;
+  height: 100px;
+  margin-bottom: 2%;
+}
+
+.salads {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.drinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
