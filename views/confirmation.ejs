@@ -26,7 +26,8 @@
   <%- include('./partials/_header') %>
   <h2> Order Confirmation</h2>
 
-  <p>Your order has been placed. <% if(accepted_time) { %>It will be completed in <%= accepted_time %> minutes. <% }%> Please check your text messages for updates.</p>
+  <p><% if(!completed) {%>Your order has been placed. <% if(accepted_time) { %>It will be completed in <%= accepted_time %> minutes. <% }%> 
+    Please check your text messages for updates.<% } else { %>Order is ready for pickup!<% } %></p>
 
   <%- include('./partials/_footer') %>
 </body>
