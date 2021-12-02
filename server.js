@@ -50,7 +50,7 @@ const { getMenuItems } = require("./db/db_pg");
 // Mount all resource routes
 app.use(usersRoutes(db));
 app.use("/orders", ordersRoutes(db));
-app.use("/carts", cartsRoutes(db));
+app.use("/cart", cartsRoutes(db));
 
 // Home page FOR PARTICULAR USER
 app.get("/", (req, res) => {

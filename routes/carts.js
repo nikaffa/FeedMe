@@ -7,74 +7,84 @@
 
 const express = require('express');
 const router  = express.Router();
-//--------------------------IN PROGRESS!!!------------------------------------
+//--------------------------READY------------------------------------
 module.exports = (db) => {
-  router.post("/cart", (req, res) => {
+  router.get("/", (req, res) => {
     if (req.cookies.user_id) {
       const userId = req.cookies.user_id;
+      console.log(userId);
       const query = `
-      SELECT * FROM order_items
-      JOIN orders ON orders.id = order_id
-      WHERE user_id = ${userId} AND type='cart'`;
-      promises.push(
-        db.query(query)
-          .then(data => data.rows)
-          .catch(error => error));
+      SELECT id FROM orders
+      WHERE user_id = $1 AND type='cart'
+      `;
+      db.query(query, [userId])
+        .then(data => {
+          console.log('data: ', data);
+          const query = `
+          SELECT orders.id as orderId, items.name, quantity, price, special_instructions FROM items
+          JOIN order_items ON items.id = item_id
+          JOIN orders ON orders.id = order_id
+          WHERE orders.id = $1 AND orders.type='cart'
+          GROUP BY orders.id, items.name, quantity, price
+          `;
+          db.query(query, [data.rows[0].id])
+            .then(d => {
+              res.render('cart', {orderItems: d.rows});
+            })
+            .catch(err => {
+              res
+                .status(500)
+                .json({ error: err.message });
+            });
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
+    } else {
+      res.send("You are admin");
     }
-    let query = `SELECT * FROM orders WHERE id = $1 WHERE type='cart'`; //pull up user_id from cookie
-    let options = [req.params.id];
-
-    console.log(query);
-    db.query(query, options)
-      .then(data => {
-        const orders = data.rows;
-        res.json({ orders });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
   });
+  //--------------------------IN PROGRESS!!!------------------------------------
+  // router.post("/:id", (req, res) => { // (user_id, type) values($1, 'cart')
+  //   let query = `INSERT INTO orders(user_id)
+  //   VALUES($1)
+  //   RETURNING *;`;
+  //   let options = [req.body.id];
 
-  router.post("/:id", (req, res) => { // (user_id, type) values($1, 'cart')
-    let query = `INSERT INTO orders(user_id)
-    VALUES($1)
-    RETURNING *;`;
-    let options = [req.body.id];
+  //   console.log(query);
+  //   db.query(query, options)
+  //     .then(data => {
+  //       const orders = data.rows;
+  //       res.json({ orders });
+  //     })
+  //     .catch(err => {
+  //       res
+  //         .status(500)
+  //         .json({ error: err.message });
+  //     });
+  // });
 
-    console.log(query);
-    db.query(query, options)
-      .then(data => {
-        const orders = data.rows;
-        res.json({ orders });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
-  router.put("/:id", (req, res) => { //update
-    //if completed then
-    let query = `UPDATE orders SET special_instructions
-    VALUES($1) WHERE order_id = $2`;
+  // router.put("/:id", (req, res) => { //update
+  //   //if completed then
+  //   let query = `UPDATE orders SET special_instructions
+  //   VALUES($1) WHERE order_id = $2`;
 
 
-    let options = [req.body.special_instructions, req.params.id];
+  //   let options = [req.body.special_instructions, req.params.id];
 
-    console.log(query);
-    db.query(query, options)
-      .then(data => {
-        const orders = data.rows;
-        res.json({ orders });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
+  //   console.log(query);
+  //   db.query(query, options)
+  //     .then(data => {
+  //       const orders = data.rows;
+  //       res.json({ orders });
+  //     })
+  //     .catch(err => {
+  //       res
+  //         .status(500)
+  //         .json({ error: err.message });
+  //     });
+  // });
   return router;
 };

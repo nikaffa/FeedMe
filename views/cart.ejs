@@ -21,10 +21,10 @@
   <title>Sweet Leaf</title>
 </head>
 <body>
-  <%- include(./partials/_header) %>
+  <%- include('./partials/_header') %>
   <div class="container cart">
 
-  <%- for(i=0; i < orderItems.length; i++) { %>
+  <% for(i=0; i < orderItems.length; i++) { %>
     <div>
       <h3><%=orderItems[i].name %></h3>
       <h3><%=orderItems[i].price %></h3>
@@ -42,13 +42,12 @@
     <h3 class="total">Subtotal</h3>
     <h3 class="total">Tax</h3>
     <h2 class="total">Total</h2>
-    <h2><%= user.name %></h2>
-    <h2><%= user.phone %></h2>
+
     <form action="/:orderid" method="post">
       <button type="submit">Place Order</button>
     </form>
   </div>
-  <%- include(./partials/_footer) %>
-  
+  <%- include('./partials/_footer') %>
+
 </body>
 </html>
