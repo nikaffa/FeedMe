@@ -40,7 +40,8 @@
           <h4>Price: $<%= (currentOrders[j].price/100).toFixed(2) %></h4>
           <h4>Qty: <%= currentOrders[j].quantity%></h4>
           <% } %>
-        <% } %>
+          <% } %>
+          <h4>Special instructions: <%= currentOrders[i].special_instructions%></h4>
         <form action="/orders/complete/<%= currentOrderNums[i].id %>" method="post">
           <button type="submit">Complete</button>
         </form>
@@ -61,6 +62,7 @@
               <h4>Qty: <%= incomingOrders[j].quantity%></h4>
               <% } %>
               <% } %>
+              <h4>Special instructions: <%= incomingOrders[i].special_instructions%></h4>
               <form action="/orders/accept/<%= incomingOrderNums[i].id %>" method="post">
                 <label>Set Estimated Completion</label>
                 <input type="text">
