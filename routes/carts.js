@@ -6,90 +6,148 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 //--------------------------READY------------------------------------
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    if (req.cookies.user_id) {
-      const user = req.cookies.user_id
-      const userId = req.cookies.user_id.id;
-      console.log(userId);
-      const query = `
-      SELECT id FROM orders
-      WHERE user_id = $1 AND type='cart'
-      `;
-      db.query(query, [userId])
-        .then(data => {
-          console.log('data: ', data);
-          const query = `
-          SELECT orders.id as orderId, items.name, quantity, price, special_instructions FROM items
-          JOIN order_items ON items.id = item_id
-          JOIN orders ON orders.id = order_id
-          WHERE orders.id = $1 AND orders.type='cart'
-          GROUP BY orders.id, items.name, quantity, price
-          `;
-          db.query(query, [data.rows[0].id])
-            .then((d) => {
-              let subtotal = 0;
-              for(i=0; i < d.rows.length; i++) {
-                subtotal += (d.rows[i].price * d.rows[i].quantity)/100;
-              }
-              res.render('cart', {orderItems: d.rows, user, subtotal});
-            })
-            .catch(err => {
-              res
-                .status(500)
-                .json({error: err.message});
-            });
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
-        });
-    } else {
+    if (!req.cookies.user_id) {
       res.send("You are admin");
     }
+    const user = req.cookies.user_id;
+    const userId = req.cookies.user_id.id;
+    console.log('userId ', userId);
+    const query = `
+    SELECT id FROM orders
+    WHERE user_id = $1 AND type='cart'
+    `;
+    db.query(query, [userId])
+      .then(data => {
+        console.log('data: ', data);
+        const query = `
+        SELECT orders.id as orderId, items.name, quantity, price, special_instructions, order_items.id as order_item_id FROM items
+        JOIN order_items ON items.id = item_id
+        JOIN orders ON orders.id = order_id
+        WHERE orders.id = $1 AND orders.type='cart'
+        GROUP BY orders.id, items.name, order_item_id, quantity, price
+        `;
+        db.query(query, [data.rows[0].id])
+          .then((d) => {
+            let subtotal = 0;
+            for (i = 0; i < d.rows.length; i++) {
+              subtotal += (d.rows[i].price * d.rows[i].quantity) / 100;
+            }
+            res.render('cart', { orderItems: d.rows, user, subtotal });
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   });
   //--------------------------IN PROGRESS!!!------------------------------------
-  // router.post("/:id", (req, res) => { // (user_id, type) values($1, 'cart')
-  //   let query = `INSERT INTO orders(user_id)
-  //   VALUES($1)
-  //   RETURNING *;`;
-  //   let options = [req.body.id];
 
-  //   console.log(query);
-  //   db.query(query, options)
-  //     .then(data => {
-  //       const orders = data.rows;
-  //       res.json({ orders });
-  //     })
-  //     .catch(err => {
-  //       res
-  //         .status(500)
-  //         .json({ error: err.message });
-  //     });
-  // });
+  router.post("/", (req, res) => {
+    if (!req.cookies.user_id) {
+      res.send("Log in as a user first!");
+    }
+    const itemId = req.body.item_id;
+    const quantity = req.body.quantity;
+    const userId = req.cookies.user_id.id;
 
-  // router.put("/:id", (req, res) => { //update
-  //   //if completed then
-  //   let query = `UPDATE orders SET special_instructions
-  //   VALUES($1) WHERE order_id = $2`;
+    // 1. get current user's cart
+    const query = `
+    SELECT id FROM orders
+    WHERE user_id = $1 AND type='cart'
+    `;
+    db.query(query, [userId])
+      .then(data => {
+        const cartId = data.rows[0].id;
+        console.log('cart id', cartId);
+        // 2. Add new item
+        const query = `INSERT INTO order_items(order_id, item_id, quantity)
+        VALUES($1, $2, $3)
+        RETURNING *;`;
+        console.log(query + ", " + cartId + ", " + itemId + ", " + quantity);
+        db.query(query, [cartId, itemId, quantity])
+          .then(data => {
+            console.log("new item added: ", data.rows[0]);
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
 
+  router.post("/remove", (req, res) => {
+    const itemId = req.body.item_id;
+    const query = `
+    DELETE FROM order_items
+    WHERE id = $1
+    `;
+    db.query(query, [itemId])
+      .then(data => {
+        return res.redirect("/cart");
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
 
-  //   let options = [req.body.special_instructions, req.params.id];
+  router.post("/place_order", (req, res) => {
+    if (!req.cookies.user_id) {
+      res.send("Log in as a user first!");
+    }
+    const instr = req.body.specialInstructions;
+    const userId = req.cookies.user_id.id;
 
-  //   console.log(query);
-  //   db.query(query, options)
-  //     .then(data => {
-  //       const orders = data.rows;
-  //       res.json({ orders });
-  //     })
-  //     .catch(err => {
-  //       res
-  //         .status(500)
-  //         .json({ error: err.message });
-  //     });
-  // });
+    // 1. get cart for userId
+    const query = `
+        SELECT orders.id as orderId, items.name, quantity, price, order_items.id as order_item_id FROM items
+        JOIN order_items ON items.id = item_id
+        JOIN orders ON orders.id = order_id
+        WHERE orders.id = $1 AND orders.type='cart'
+        GROUP BY orders.id, items.name, order_item_id, quantity, price
+        `;
+    db.query(query, [userId])
+      .then(data => {
+      // 2. update set type=order, special_instructions=instr
+        const query = `UPDATE orders SET type = 'order', special_instructions = $1
+        WHERE id = $2 AND type = 'cart'`;
+        db.query(query, [instr, data.rows[0].id])
+          .then(data => {
+            res.clearCookie("user_id", req.cookies.user_id); //clear cookie
+            res.render('confirmation');
+
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+  });
+
   return router;
 };

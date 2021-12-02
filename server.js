@@ -59,17 +59,6 @@ app.get("/", (req, res) => {
     getMenuItems('Salads'),
     getMenuItems('Drinks'),
   ];
-  // if (req.cookies.user_id) {
-  //   const userId = req.cookies.user_id;
-  //   const query = `
-  //   SELECT * FROM order_items
-  //   JOIN orders ON orders.id = order_id
-  //   WHERE user_id = ${userId}`;
-  //   promises.push(
-  //     db.query(query)
-  //       .then(data => data.rows)
-  //       .catch(error => error));
-  // }
 
   Promise.all(promises)
     .then((all) => {
@@ -87,8 +76,6 @@ app.get("/", (req, res) => {
       console.log(err.message);
     });
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
