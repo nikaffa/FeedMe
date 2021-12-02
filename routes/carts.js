@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
-//--------------------------READY------------------------------------
+
 module.exports = (db) => {
   router.get("/", (req, res) => {
     if (!req.cookies.user_id) {
@@ -33,7 +33,7 @@ module.exports = (db) => {
         db.query(query, [data.rows[0].id])
           .then((d) => {
             let subtotal = 0;
-            for (i = 0; i < d.rows.length; i++) {
+            for (let i = 0; i < d.rows.length; i++) {
               subtotal += (d.rows[i].price * d.rows[i].quantity) / 100;
             }
             res.render('cart', { orderItems: d.rows, user, subtotal });
@@ -50,7 +50,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  //--------------------------IN PROGRESS!!!------------------------------------
 
   router.post("/", (req, res) => {
     if (!req.cookies.user_id) {
@@ -60,7 +59,7 @@ module.exports = (db) => {
     const quantity = req.body.quantity;
     const userId = req.cookies.user_id;
 
-    // 1. get current user's cart
+    // Get current user's cart
     const query = `
     SELECT id FROM orders
     WHERE user_id = $1 AND type='cart'
@@ -69,11 +68,11 @@ module.exports = (db) => {
       .then(data => {
         const cartId = data.rows[0].id;
         console.log('cart id', cartId);
-        // 2. Add new item
+        // Add new item
         const query = `INSERT INTO order_items(order_id, item_id, quantity)
         VALUES($1, $2, $3)
         RETURNING *;`;
-        console.log(query + ", " + cartId + ", " + itemId + ", " + quantity);
+        //console.log(query + ", " + cartId + ", " + itemId + ", " + quantity);
         db.query(query, [cartId, itemId, quantity])
           .then(data => {
             console.log("new item added: ", data.rows[0]);
@@ -115,19 +114,19 @@ module.exports = (db) => {
     const instr = req.body.specialInstructions;
     const userId = req.cookies.user_id;
 
-    // 1. get cart for userId
+    // Get cart for userId
     const query = `
       SELECT id FROM orders
       WHERE user_id = $1 AND type='cart'
         `;
     db.query(query, [userId])
       .then(data => {
-        // 2. update set type=order, special_instructions=instr
+        // Update cart to order
         const query = `UPDATE orders SET type = 'order', special_instructions = $1
         WHERE id = $2 AND type = 'cart'`;
         db.query(query, [instr, data.rows[0].id])
           .then(data => {
-            //creating a new cart
+            //Creating a new cart
             const query = `
               INSERT INTO orders(user_id, type)
               VALUES($1, 'cart')
@@ -136,15 +135,13 @@ module.exports = (db) => {
             db.query(query, [userId])
               .then(data => {
                 console.log("new cart created: ", data.rows[0]);
+                res.redirect('confirmation');
               })
               .catch(err => {
                 res
                   .status(500)
                   .json({ error: err.message });
               });
-            //res.clearCookie("user_id", req.cookies.user_id); //clear cookie
-            res.redirect('order_placed');
-
           })
           .catch(err => {
             res
@@ -161,8 +158,37 @@ module.exports = (db) => {
 
   });
 
-  router.get("/order_placed", (req, res) => {
-    res.render('order_placed');
+  router.get("/confirmation", (req, res) => {
+    const userId = req.cookies.user_id;
+    const query = `
+      SELECT id FROM orders
+      WHERE user_id = $1 AND type='order'
+        `;
+    db.query(query, [userId])
+      .then(data => {
+        const query = `
+        SELECT * FROM orders
+        WHERE id = $1
+        `;
+        db.query(query, [data.rows[0].id])
+          .then(data => {
+            const completed = data.rows[0].completed;
+            const accepted = data.rows[0].accepted_at;
+            //const estimated_time =
+            res.render('confirmation', {completed, accepted});
+          })
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
   });
 
   return router;
