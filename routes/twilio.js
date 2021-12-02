@@ -6,12 +6,13 @@ require('dotenv').config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioNumber = process.env.TWILIO_NUMBER;
-// const resturantNumber = process.env.RESTAURANT_NUMBER;
-// const customerNumber = process.env.CUSTOMER_NUMBER;
+
+const resturantNumber = process.env.RESTAURANT_NUMBER;
+
 
 const twilio = require('twilio')(accountSid, authToken);
 
-// message to user when submit button is triggered
+// message to user when accept button is triggered
 const messageCustomer = (customer) => {
   const text = `Hi ${customer}, your order will be ready in 20 minutes!`;
 
@@ -33,7 +34,8 @@ const messageRestaurant = (orderId, customer) => {
     .create({
        body: text,
        from: twilioNumber,
-       to: '+1....'
+       to: resturantNumber
+
      })
 };
 
