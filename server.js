@@ -66,7 +66,6 @@ app.get("/", (req, res) => {
       const salads = all[1].rows;
       const drinks = all[2].rows;
       console.log(bowls, salads, drinks);
-      //const userOrders = user_id_cookie ? all[3].rows : []
       const templateVars = {
         bowls, salads, drinks
       };
