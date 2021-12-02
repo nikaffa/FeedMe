@@ -27,10 +27,12 @@ module.exports = (db) => {
     promises.push(db.query(query));
 
     query = `SELECT id FROM ORDERS
+
     WHERE type='order' AND accepted_at IS NULL AND completed = FALSE`;
     promises.push(db.query(query));
     query = `SELECT id FROM ORDERS
     WHERE type='order' AND accepted_at IS NOT NULL AND completed = FALSE`;
+
     promises.push(db.query(query));
 
     Promise.all(promises)
@@ -40,7 +42,8 @@ module.exports = (db) => {
         const incomingOrders = all[0].rows;
         const currentOrderNums = all[3].rows;
         const incomingOrderNums = all[2].rows;
-        console.log(incomingOrderNums);
+        console.log(incomingOrderNums)
+
 
         const templateVars = { incomingOrders, currentOrders, currentOrderNums, incomingOrderNums };
         res.render("adminOrders", templateVars);
