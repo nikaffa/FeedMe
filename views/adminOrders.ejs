@@ -25,47 +25,58 @@
 <body>
   <%- include('./partials/_header') %>
   <!-- use js to change the text of login to logout on this page -->
-  <h2>Orders</h2>
+  
+  <!-- <h2 class="page_title">Orders</h2> -->
   <div class="container">
-    <div class="container">
+    
+    <div class="current_orders">
       <h3>Current Orders</h3>
-      <% for(i=0; i < currentOrders.length; i++)  { %>
-      <div class="container">
-        <h4>Order#: <%= currentOrders[i].id %></h4>
-        <% for(j=0; j < currentOrders[i].items.length; j++) { %> <!--gives an error-->
-          <h4><%= currentOrders[i].items[j].name %></h4>
-          <h4><%= currentOrders[i].items[j].price %></h4>
-          <h4><%= currentOrders[i].items[j].quantity%></h4>
+      <% for(i=0; i < currentOrderNums.length; i++)  { %>
+        
+       <div class="order">
+        <h2>Order#: <%= currentOrderNums[i].id %></h2>
+        <% for(j=0; j < currentOrders.length; j++) { %>
+          <% if(currentOrders[j].order_id === currentOrderNums[i].id) { %><!--gives an error-->
+          <h3><%= currentOrders[j].name %></h3>
+          <h4>Price: $<%= (currentOrders[j].price/100).toFixed(2) %></h4>
+          <h4>Qty: <%= currentOrders[j].quantity%></h4>
+          <% } %>
         <% } %>
-        <form action="/<%= currentOrders[i].id %>/complete" method="post"> <!--check the order id please-->
+        <form action="/<%= currentOrderNums[i].id %>/complete" method="post"> <!--check the order id please-->
           <button type="submit">Complete</button>
         </form>
       </div>
-      <% } %>
-    </div>
-  </div>
-
-  <div class="container">
-      <h3>Incoming Orders</h3>
-      <% for(i=0; i < incomingOrders.length; i++)  { %>
-      <div class="container">
-        <h4>Order#: <%= incomingOrders[i].id %></h4>
-        <% for(j=0; j < incomingOrders[i].items.length; j++) { %> <!--gives an error-->
-          <h4><%= incomingOrders[i].items[j].name %></h4>
-          <h4><%= incomingOrders[i].items[j].price %></h4>
-          <h4><%= incomingOrders[i].items[j].quantity%></h4>
         <% } %>
-        <form action="/<%= incomingOrders[i].id %>/accept" method="post"> <!--check the order id please-->
-          <label>Set Estimated Completion</label>
-          <input type="text">
-          <button type="submit">Accept</button>
-        </form>
+    </div>
+    
+    <div class="incoming_orders">
+
+      <h3>Incoming Orders</h3>
+      <% for(i=0; i < incomingOrderNums.length; i++)  { %>
+          <div class='order'>
+            <h2>Order#: <%= incomingOrderNums[i].id %></h2>
+              <% for(j=0; j < incomingOrders.length; j++) { %>
+              <% if(incomingOrders[j].order_id === incomingOrderNums[i].id) {%> 
+              
+              <h3><%= incomingOrders[j].name %></h3>
+              <h4>Price: $<%= (incomingOrders[j].price/100).toFixed(2) %></h4>
+              <h4>Qty: <%= incomingOrders[j].quantity%></h4>
+              <% } %><!--gives an error-->
+              <% } %>
+              <form action="/<%= incomingOrderNums[i].id %>/accept" method="post"> <!--check the order id please-->
+                <label>Set Estimated Completion</label>
+                <input type="text">
+                <button type="submit">Accept</button>
+              </form>
+            </div>
+              <% } %>
+            
       </div>
-      <% } %>
+            
   </div>
         <!-- save orders with accepted timestamp, but no on completed as currentorders under each current order add a key items
       with an array of all items in that order -->
-            <!-- save orders with no accepted timestamp and completed false as incomingOrders -->
+       <!-- save orders with no accepted timestamp and completed false as incomingOrders -->
   <%- include('./partials/_footer') %>
 </body>
 </html>

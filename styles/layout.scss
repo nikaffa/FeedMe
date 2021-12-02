@@ -5,6 +5,8 @@ html {
   margin: 0;
 }
 
+//nav header
+
 header {
   display: flex;
   justify-content: space-between;
@@ -20,6 +22,8 @@ header {
   padding: 10px 15px;
   text-decoration: none;
 }
+
+//Main page
 
 .menu {
   display: flex;
@@ -86,3 +90,42 @@ header {
 .item_info {
   margin-left: 1%;
 }
+
+//admin orders page
+
+
+
+
+.page_title {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  
+}
+
+.current_orders {
+  width: 40%;
+  text-align: center;
+}
+
+.incoming_orders {
+  width: 40%;
+  text-align: center;
+}
+
+.order {
+  text-align:center;  
+  border: 4px solid #704C5E;
+  padding: 5%;
+  margin-bottom: 5%;
+  border-radius: 15%;
+  
+}
+
+.order h3 {
+  text-decoration: underline;
+}
+
