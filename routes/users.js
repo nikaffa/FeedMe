@@ -17,7 +17,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM users WHERE id = $1`, [req.params.id])
       .then(data => {
         const users = data.rows;
-        res.cookie("user_id", users[0]); //sets up a cookie
+        res.cookie("user_id", users[0].id); //sets up a cookie
 
         // 1. db.query(select * from orders where user_id = $users[0] and type='cart')
         // 2.    .then(data => {  })

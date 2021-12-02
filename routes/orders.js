@@ -27,10 +27,12 @@ module.exports = (db) => {
     promises.push(db.query(query));
 
     query = `SELECT id FROM ORDERS
-    WHERE type='order' AND accepted_at IS NULL AND completed = FALSE`
+
+    WHERE type='order' AND accepted_at IS NULL AND completed = FALSE`;
     promises.push(db.query(query));
     query = `SELECT id FROM ORDERS
-    WHERE type='order' AND accepted_at IS NOT NULL AND completed = FALSE`
+    WHERE type='order' AND accepted_at IS NOT NULL AND completed = FALSE`;
+
     promises.push(db.query(query));
 
     Promise.all(promises)
@@ -41,6 +43,7 @@ module.exports = (db) => {
         const currentOrderNums = all[3].rows;
         const incomingOrderNums = all[2].rows;
         console.log(incomingOrderNums)
+
 
         const templateVars = { incomingOrders, currentOrders, currentOrderNums, incomingOrderNums };
         res.render("adminOrders", templateVars);
@@ -72,15 +75,13 @@ module.exports = (db) => {
   //     });
   // });
 
-  router.post("/:id/accept", (req, res) => { //if accepted
+  router.post("/accept/:id", (req, res) => { //if accepted
     let query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP
     WHERE id = $1 AND type = 'order'`;
-    let options = [req.params.id]; //order.id??
-    console.log(query);
-    db.query(query, options)
+    db.query(query, [req.params.id])
       .then(data => {
-        const order = data.rows;
-        res.json({ order });
+        console.log(data);
+        res.redirect("/orders");
         //update at front-end
         //send 1st notification
       })
@@ -90,17 +91,15 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  router.post("/:id/complete", (req, res) => { //if accepted
+  router.post("/complete/:id", (req, res) => { //if completed
     let query = `UPDATE orders SET completed = TRUE
     WHERE id = $1 AND type = 'order'`;
-    let options = [req.params.id]; //order.id??
-    console.log(query);
-    db.query(query, options)
+    db.query(query, [req.params.id])
       .then(data => {
-        const order = data.rows;
-        res.json({ order });
+        console.log(data);
+        res.redirect("/orders");
         //update at front-end
-        //ssend 2st notification
+        //send 2st notification
       })
       .catch(err => {
         res

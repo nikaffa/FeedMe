@@ -50,7 +50,7 @@ const { getMenuItems } = require("./db/db_pg");
 // Mount all resource routes
 app.use(usersRoutes(db));
 app.use("/orders", ordersRoutes(db));
-app.use("/carts", cartsRoutes(db));
+app.use("/cart", cartsRoutes(db));
 
 // Home page FOR PARTICULAR USER
 app.get("/", (req, res) => {
@@ -59,17 +59,17 @@ app.get("/", (req, res) => {
     getMenuItems('Salads'),
     getMenuItems('Drinks'),
   ];
-  if (req.cookies.user_id) {
-    const userId = req.cookies.user_id;
-    const query = `
-    SELECT * FROM order_items
-    JOIN orders ON orders.id = order_id
-    WHERE user_id = ${userId}`;
-    promises.push(
-      db.query(query)
-        .then(data => data.rows)
-        .catch(error => error));
-  }
+  // if (req.cookies.user_id) {
+  //   const userId = req.cookies.user_id;
+  //   const query = `
+  //   SELECT * FROM order_items
+  //   JOIN orders ON orders.id = order_id
+  //   WHERE user_id = ${userId}`;
+  //   promises.push(
+  //     db.query(query)
+  //       .then(data => data.rows)
+  //       .catch(error => error));
+  // }
 
   Promise.all(promises)
     .then((all) => {
