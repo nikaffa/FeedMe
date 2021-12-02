@@ -25,32 +25,29 @@
 <body>
   <%- include('./partials/_header') %>
   <!-- use js to change the text of login to logout on this page -->
-  
+
   <!-- <h2 class="page_title">Orders</h2> -->
   <div class="container">
-    
+
     <div class="current_orders">
       <h3>Current Orders</h3>
       <% for(i=0; i < currentOrderNums.length; i++)  { %>
        <div class="order">
         <h2>Order#: <%= currentOrderNums[i].id %></h2>
         <% for(j=0; j < currentOrders.length; j++) { %>
-          <% if(currentOrders[j].order_id === currentOrderNums[i].id) { %><!--gives an error-->
+          <% if(currentOrders[j].order_id === currentOrderNums[i].id) { %>
           <h3><%= currentOrders[j].name %></h3>
-
           <h4>Price: $<%= (currentOrders[j].price/100).toFixed(2) %></h4>
           <h4>Qty: <%= currentOrders[j].quantity%></h4>
           <% } %>
         <% } %>
-
-
-        <form action="/orders/complete/<%= currentOrderNums[i].id %>" method="post"> <!--check the order id please-->
+        <form action="/orders/complete/<%= currentOrderNums[i].id %>" method="post">
           <button type="submit">Complete</button>
         </form>
       </div>
         <% } %>
     </div>
-    
+
     <div class="incoming_orders">
 
       <h3>Incoming Orders</h3>
@@ -58,24 +55,23 @@
           <div class='order'>
             <h2>Order#: <%= incomingOrderNums[i].id %></h2>
               <% for(j=0; j < incomingOrders.length; j++) { %>
-              <% if(incomingOrders[j].order_id === incomingOrderNums[i].id) {%> 
-              
+              <% if(incomingOrders[j].order_id === incomingOrderNums[i].id) {%>
               <h3><%= incomingOrders[j].name %></h3>
               <h4>Price: $<%= (incomingOrders[j].price/100).toFixed(2) %></h4>
               <h4>Qty: <%= incomingOrders[j].quantity%></h4>
-              <% } %><!--gives an error-->
               <% } %>
-              <form action="/orders/accept/<%= incomingOrderNums[i].id %> method="post"> <!--check the order id please-->
+              <% } %>
+              <form action="/orders/accept/<%= incomingOrderNums[i].id %>" method="post">
                 <label>Set Estimated Completion</label>
                 <input type="text">
                 <button type="submit">Accept</button>
               </form>
             </div>
               <% } %>
-            
+
 
       </div>
-            
+
   </div>
         <!-- save orders with accepted timestamp, but no on completed as currentorders under each current order add a key items
       with an array of all items in that order -->
