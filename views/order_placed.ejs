@@ -3,7 +3,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <!-- stylesheets -->
+
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
@@ -22,34 +24,11 @@
 </head>
 <body>
   <%- include('./partials/_header') %>
-  <div class="container_cart">
 
-  <% for(i=0; i < orderItems.length; i++) { %>
-    <div class="cart_order">
-      <h3><%= orderItems[i].name %></h3>
-      <h3>$<%= (orderItems[i].price/100).toFixed(2) %></h3>
-      <h3><%= orderItems[i].quantity %></h3>
+  <h2>Order placed!</h2>
 
-      <form action="/cart/remove" method="post">
-        <input type="hidden" name="item_id" value="<%= orderItems[i].order_item_id %>"/>
-        <button type="submit">Remove</button>
-      </form>
-      <h3 class="total">Item Total $<%= ((orderItems[i].price * orderItems[i].quantity)/100).toFixed(2) %></h3>
-    </div>
-  <% } %>
-    <h3 class="total">Subtotal $<%= subtotal.toFixed(2) %></h3>
-    <h3 class="total">Tax $<%= (subtotal * .05).toFixed(2) %></h3>
-    <h2 class="total">Total $<%= (subtotal + (subtotal * .05)).toFixed(2) %></h2>
-    <h2><%= user.name %></h2>
-    <h2><%= user.phone %></h2>
-    <form action="/cart/place_order" method="post">
-      <label for="specialInstructions">Special Instructions</label>
-      <input type="text" name="specialInstructions">
+  <p>Your order has been placed. Please check your text messages for updates.</p>
 
-      <button id="submitOrder" type="submit">Place Order</button>
-    </form>
-  </div>
   <%- include('./partials/_footer') %>
-
 </body>
 </html>
