@@ -26,6 +26,10 @@ header {
   background-color: $accent-color1;
   color: $main-color;
   font-family: $header-font;
+  height: 100px;
+}
+header img {
+  height: 80%;
 }
 
 footer {
@@ -44,12 +48,12 @@ header a:hover {
   color: $accent-color2;
 }
 
-.menu_item button {
+button {
   background-color: $accent-color1;
   color: $main-color;
   padding: 10px;
 }
-.menu_item button:hover {
+button:hover {
   background-color: $accent-color2;
 }
 
@@ -76,4 +80,8 @@ div.menu a {
 div.menu a:hover {
   color: $accent-color2;
 
+}
+
+label {
+  font-family: $header-font;
 }

@@ -38,6 +38,10 @@ $('document').ready(
     $('.unhide.drinks0').on('click', function() {
       $('.drinks0').toggleClass('hide')
     })
+
+    $('#submitOrder').on('click', function() {
+      $.alert('Order has been submitted')
+    })
   }
   
 );
