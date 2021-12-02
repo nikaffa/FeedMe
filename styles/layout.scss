@@ -138,10 +138,38 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 .cart_order {
-  border: 2px solid green;
+  border-bottom: 2px dashed #704C5E;
   margin-top: 2%;
-  padding: 2%;
+  padding: 3%;
+}
+
+.total_cart {
+  border: 5px solid #704C5E;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-radius: 2%;
+  
+}
+.total {
+  text-align: right;
+}
+
+.total_cost {
+  padding: 3%;
+}
+#submitOrder {
+  margin-top: 2%;
+}
+
+.footer {
+  width: 100%;
+}
+.cartOrder_bottom {
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
 }
