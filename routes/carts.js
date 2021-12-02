@@ -6,7 +6,9 @@
  */
 
 const express = require('express');
+const { messageRestaurant } = require('./twilio');
 const router = express.Router();
+const {messageCustomer, messageRestaurant, messageOrderReady } = require('./users')
 //--------------------------READY------------------------------------
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -136,6 +138,7 @@ module.exports = (db) => {
             db.query(query, [userId])
               .then(data => {
                 console.log("new cart created: ", data.rows[0]);
+                messageRestaurant(data.rows[0].id)
               })
               .catch(err => {
                 res

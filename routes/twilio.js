@@ -13,14 +13,14 @@ const resturantNumber = process.env.RESTAURANT_NUMBER;
 const twilio = require('twilio')(accountSid, authToken);
 
 // message to user when accept button is triggered
-const messageCustomer = (customer) => {
-  const text = `Hi ${customer}, your order will be ready in 20 minutes!`;
+const messageCustomer = (order, number) => {
+  const text = `Hello, your order ${orderId} will be ready in ${number} minutes!`;
 
   twilio.messages
     .create({
        body: text,
        from: twilioNumber,
-       to: '+1....'
+       to: '+16715135317'
      })
     .then(message => console.log(message.sid));
 
@@ -28,8 +28,8 @@ const messageCustomer = (customer) => {
 
 
 // message to restaurant with order details
-const messageRestaurant = (orderId, customer) => {
-  const text = `New order number ${orderId} received from ${customer}`;
+const messageRestaurant = (orderId) => {
+  const text = `New order number ${orderId} received.`;
   twilio.messages
     .create({
        body: text,
@@ -45,7 +45,7 @@ const messageOrderReady = (orderId) => {
     .create({
        body: text,
        from: twilioNumber,
-       to: '+1....'
+       to: '+16715135317'
      })
 
 };
