@@ -26,22 +26,23 @@
 
   <% for(i=0; i < orderItems.length; i++) { %>
     <div>
-      <h3><%=orderItems[i].name %></h3>
-      <h3><%=orderItems[i].price %></h3>
+      <h3><%= orderItems[i].name %></h3>
+      <h3>$<%= (orderItems[i].price/100).toFixed(2) %></h3>
+      <h3><%= orderItems[i].quantity %></h3>
       <form action="/:itemid" method="post">
-        <label for="quantity">Qty</label>
+        <label for="quantity">Change Qty</label>
         <input type="number" min="1" max="10" name="quantity">
         <button type="submit">Submit</button>
         <button type="submit">Remove</button>
         <label for="specialInstructions">Special Instructions</label>
         <input type="text" name="specialInstructions">
       </form>
-      <h3 class="total">Item Total</h3>
+      <h3 class="total">Item Total $<%= ((orderItems[i].price * orderItems[i].quantity)/100).toFixed(2) %></h3>
     </div>
   <% } %>
-    <h3 class="total">Subtotal</h3>
-    <h3 class="total">Tax</h3>
-    <h2 class="total">Total</h2>
+    <h3 class="total">Subtotal $<%= subtotal.toFixed(2) %></h3>
+    <h3 class="total">Tax $<%= (subtotal * .05).toFixed(2) %></h3>
+    <h2 class="total">Total $<%= (subtotal + (subtotal * .05)).toFixed(2) %></h2>
     <h2><%= user.name %></h2>
     <h2><%= user.phone %></h2>
     <form action="/:orderid" method="post">

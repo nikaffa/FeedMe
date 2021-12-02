@@ -11,7 +11,8 @@ const router  = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
     if (req.cookies.user_id) {
-      const userId = req.cookies.user_id;
+      const user = req.cookies.user_id
+      const userId = req.cookies.user_id.id;
       console.log(userId);
       const query = `
       SELECT id FROM orders
@@ -28,13 +29,17 @@ module.exports = (db) => {
           GROUP BY orders.id, items.name, quantity, price
           `;
           db.query(query, [data.rows[0].id])
-            .then(d => {
-              res.render('cart', {orderItems: d.rows});
+            .then((d) => {
+              let subtotal = 0;
+              for(i=0; i < d.rows.length; i++) {
+                subtotal += (d.rows[i].price * d.rows[i].quantity)/100;
+              }
+              res.render('cart', {orderItems: d.rows, user, subtotal});
             })
             .catch(err => {
               res
                 .status(500)
-                .json({ error: err.message });
+                .json({error: err.message});
             });
         })
         .catch(err => {
