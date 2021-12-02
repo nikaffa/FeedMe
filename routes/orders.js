@@ -42,7 +42,6 @@ module.exports = (db) => {
         const incomingOrderNums = all[2].rows;
         console.log(incomingOrderNums);
 
-
         const templateVars = { incomingOrders, currentOrders, currentOrderNums, incomingOrderNums };
         res.render("adminOrders", templateVars);
       })
@@ -54,27 +53,8 @@ module.exports = (db) => {
 
   });
 
-  // router.post("/:id/accept", (req, res) => { // (user_id, type) values($1, 'cart')
-  //   let query = `INSERT INTO orders(user_id)
-  //   VALUES($1)
-  //   RETURNING *;`;
-  //   let options = [req.body.id];
-
-  //   console.log(query);
-  //   db.query(query, options)
-  //     .then(data => {
-  //       const orders = data.rows;
-  //       res.json({ orders });
-  //     })
-  //     .catch(err => {
-  //       res
-  //         .status(500)
-  //         .json({ error: err.message });
-  //     });
-  // });
-
   router.post("/accept/:id", (req, res) => { //if accepted
-    let query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP
+    const query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP
     WHERE id = $1 AND type = 'order'`;
     db.query(query, [req.params.id])
       .then(data => {
@@ -89,8 +69,9 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
   router.post("/complete/:id", (req, res) => { //if completed
-    let query = `UPDATE orders SET completed = TRUE
+    const query = `UPDATE orders SET completed = TRUE
     WHERE id = $1 AND type = 'order'`;
     db.query(query, [req.params.id])
       .then(data => {
@@ -105,7 +86,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
 
   return router;
 };
