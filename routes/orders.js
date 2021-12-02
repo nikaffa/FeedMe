@@ -42,6 +42,7 @@ module.exports = (db) => {
         const incomingOrderNums = all[2].rows;
         console.log(incomingOrderNums);
 
+
         const templateVars = { incomingOrders, currentOrders, currentOrderNums, incomingOrderNums };
         res.render("adminOrders", templateVars);
       })
