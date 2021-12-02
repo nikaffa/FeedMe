@@ -14,6 +14,8 @@ VALUES
 (6, 'Stasy Choo', '604-500-8552'),
 (7, 'Margarita', '604-522-8522');
 
+SELECT setval('users_id_seq', (SELECT MAX(id) FROM users)+1);
+
 INSERT INTO items(id, type, name, description, price, image)
 VALUES
 (1, 'Bowls', 'Harvest Bowl', 'Roasted chicken, roasted sweet potatoes, apples, goat cheese, roasted almonds, warm wild rice, shredded kale, balsamic vinaigrette', 1650, 'https://images.ctfassets.net/eum7w7yri3zr/Br3EYlf6srQYhCXdvOfwt/19e0fdce4fdd9df8794e5408e10178aa/Product_Carousel-Harvest_Bowl.jpg?w=600&q=75'),
@@ -28,6 +30,8 @@ VALUES
 (10, 'Drinks', 'Hibiscus Clover Tea', 'Refreshing crimson clover tea brightened with tangy hibiscus', 2000, 'https://images.ctfassets.net/eum7w7yri3zr/j28IU9sScvgvuvnQ5AkBj/8f2d3dadaea2baf2810bf5ad1cb90215/menu_spindrift_hibiscus_berry_clover_front_digital_evergreen.jpg?w=600&q=75'),
 (11, 'Drinks', 'Jasmine Green Tea', 'Antioxidant rich, with organic soba and wild grown yaupon', 2000, 'https://images.ctfassets.net/eum7w7yri3zr/2jHOZmyz32YglnVD4E0Cgv/94f7aaf703675ae8c532111412958cc0/menu_jasmine_green_tea_front_digital_evergreen.jpg?w=600&q=75'),
 (12, 'Drinks', 'Kombucha Apple', 'Effervescent probiotic tea brewed with a hint of apple cider', 3500, 'https://images.ctfassets.net/eum7w7yri3zr/6GI214xbY5YdQewcY23bWG/53db0deaef6d249ce4ce553e0aaa5773/menu_health-ade_kombucha_pink_lady_apple_front_digital_evergreen.jpg?w=600&q=75');
+
+SELECT setval('items_id_seq', (SELECT MAX(id) FROM items)+1);
 
 INSERT INTO orders(id, user_id, type)
 VALUES
@@ -59,3 +63,5 @@ VALUES
 (7, 8, 7, 1),
 (8, 9, 7, 100);
 
+SELECT setval('orders_id_seq', (SELECT MAX(id) FROM orders)+1);
+SELECT setval('order_items_id_seq', (SELECT MAX(id) FROM order_items)+1);
