@@ -47,10 +47,10 @@ VALUES
 (3, 3, 4, 1),
 (4, 4, 5, 10);
 
-INSERT INTO orders(id, user_id, type, accepted_at)
+INSERT INTO orders(id, user_id, type, accepted_at, completion_time)
 VALUES
-(6, 7, 'order', Now()),
-(7, 7, 'order', Now());
+(6, 7, 'order', Now(), 40),
+(7, 7, 'order', Now(), 20);
 
 INSERT INTO order_items(id, item_id, order_id, quantity)
 VALUES
