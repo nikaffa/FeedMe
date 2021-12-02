@@ -32,7 +32,7 @@
       <form action="/:itemid" method="post">
         <label for="quantity">Change Qty</label>
         <input type="number" min="1" max="10" name="quantity">
-        <button type="submit">Submit</button>
+        <button type="submit">Update</button>
         <button type="submit">Remove</button>
         <label for="specialInstructions">Special Instructions</label>
         <input type="text" name="specialInstructions">
@@ -43,8 +43,8 @@
     <h3 class="total">Subtotal $<%= subtotal.toFixed(2) %></h3>
     <h3 class="total">Tax $<%= (subtotal * .05).toFixed(2) %></h3>
     <h2 class="total">Total $<%= (subtotal + (subtotal * .05)).toFixed(2) %></h2>
-    <h2><%= user.name %></h2>
-    <h2><%= user.phone %></h2>
+    <h3><%= user.name %></h2>
+    <h3><%= user.phone %></h2>
     <form action="/:orderid" method="post">
       <button id="submitOrder" type="submit">Place Order</button>
     </form>
