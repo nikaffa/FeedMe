@@ -8,6 +8,19 @@
 const express = require('express');
 const router = express.Router();
 
+require('dotenv').config();
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilioNumber = process.env.TWILIO_NUMBER;
+
+const resturantNumber = process.env.RESTAURANT_NUMBER;
+
+
+const twilio = require('twilio')(accountSid, authToken);
+
+const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
+
 module.exports = (db) => {
   router.get("/", (req, res) => {
     if (!req.cookies.user_id) {

@@ -5,8 +5,24 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+require('dotenv').config();
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const twilioNumber = process.env.TWILIO_NUMBER;
+
+const resturantNumber = process.env.RESTAURANT_NUMBER;
+
+
+const twilio = require('twilio')(accountSid, authToken);
+
+const bodyParser = require('body-parser');
 const express = require('express');
 const router  = express.Router();
+const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
+const app = express();
+// const parse = bodyParser.urlencoded('utf-8', {extended: false})
+
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -55,6 +71,8 @@ module.exports = (db) => {
 
   router.post("/accept/:id", (req, res) => { //if accepted
     console.log('req.params', req.params);
+    messageCustomer(req.params.id, req.body.estimated_time)
+
     const query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP
     WHERE id = $1 AND type = 'order'`;
     db.query(query, [req.params.id])
@@ -63,7 +81,7 @@ module.exports = (db) => {
         res.redirect("/orders");
         //update at front-end
         //send 1st notification
-        messageCustomer(req.params.id, req.params.estimated_time)
+        console.log(req.params)
 
       })
       .catch(err => {
