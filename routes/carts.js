@@ -6,9 +6,7 @@
  */
 
 const express = require('express');
-const { messageRestaurant } = require('./twilio');
 const router = express.Router();
-const {messageCustomer, messageRestaurant, messageOrderReady } = require('./users')
 //--------------------------READY------------------------------------
 module.exports = (db) => {
   router.get("/", (req, res) => {

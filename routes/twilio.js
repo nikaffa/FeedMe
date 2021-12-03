@@ -14,15 +14,17 @@ const twilio = require('twilio')(accountSid, authToken);
 
 // message to user when accept button is triggered
 const messageCustomer = (order, number) => {
-  const text = `Hello, your order ${orderId} will be ready in ${number} minutes!`;
+  const text = `Hello, your order ${order} will be ready in ${number} minutes!`;
 
   twilio.messages
     .create({
        body: text,
        from: twilioNumber,
-       to: '+16715135317'
+       to: '+16725135317'
      })
-    .then(message => console.log(message.sid));
+    .then(message => console.log(message.sid)).catch((err)=>{
+      console.log(err.message)
+    });
 
 };
 
@@ -34,8 +36,10 @@ const messageRestaurant = (orderId) => {
     .create({
        body: text,
        from: twilioNumber,
-       to: resturantNumber
+       to: '+16725135317'
 
+     }).catch((err)=>{
+       console.log(err.message)
      })
 };
 
@@ -45,7 +49,9 @@ const messageOrderReady = (orderId) => {
     .create({
        body: text,
        from: twilioNumber,
-       to: '+16715135317'
+       to: '+16725135317'
+     }).catch((err)=> {
+       console.log(err.message)
      })
 
 };

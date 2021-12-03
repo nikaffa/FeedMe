@@ -7,7 +7,6 @@
 
 const express = require('express');
 const router  = express.Router();
-const {messageCustomer, messageRestaurant, messageOrderReady } = require('./users')
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -82,7 +81,7 @@ module.exports = (db) => {
         res.redirect("/orders");
         //update at front-end
         //send 2st notification
-        messageOrderReady(req.params.id)
+        messageOrderReady(req.params.id);
       })
       .catch(err => {
         res
