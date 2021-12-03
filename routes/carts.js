@@ -43,7 +43,7 @@ module.exports = (db) => {
         `;
         db.query(query, [data.rows[0].id])
           .then((d) => {
-            console.log(' your current cart', d.rows);
+            console.log(' your current cart', d.rows[0]);
             let subtotal = 0;
             for (let i = 0; i < d.rows.length; i++) {
               subtotal += (d.rows[i].price * d.rows[i].quantity) / 100;
@@ -63,6 +63,7 @@ module.exports = (db) => {
       });
   });
 
+  // add item:
   router.post("/", (req, res) => {
     if (!req.cookies.user_id) {
       res.send("Log in as a user first!");
@@ -102,6 +103,7 @@ module.exports = (db) => {
       });
   });
 
+  // remove item:
   router.post("/remove", (req, res) => {
     const itemId = req.body.item_id;
     const query = `
@@ -136,7 +138,8 @@ module.exports = (db) => {
         // Update cart to order
         const query = `UPDATE orders SET type = 'order', special_instructions = $1
         WHERE id = $2 AND type = 'cart'`;
-        db.query(query, [instr, data.rows[0].id])
+        const orderId = data.rows[0].id;
+        db.query(query, [instr, orderId])
           .then(data => {
             //Creating a new cart
             const query = `
@@ -147,8 +150,10 @@ module.exports = (db) => {
             db.query(query, [userId])
               .then(data => {
                 console.log("new cart created: ", data.rows[0]);
+
+                res.redirect('confirmation/' + orderId);
+
                 messageRestaurant(data.rows[0].id)
-                res.redirect('confirmation');
               })
               .catch(err => {
                 res
@@ -171,36 +176,27 @@ module.exports = (db) => {
 
   });
 
-  router.get("/confirmation", (req, res) => {
-    const userId = req.cookies.user_id;
+  router.get("/confirmation/:id", (req, res) => {
+
+    const orderId = req.params.id;
     const query = `
-      SELECT id FROM orders
-      WHERE user_id = $1 AND type='order'
-        `;
-    db.query(query, [userId])
-      .then(data => {
-        const query = `
         SELECT * FROM orders
         WHERE id = $1
         `;
-        db.query(query, [data.rows[0].id])
-          .then(data => {
-            const completed = data.rows[0].completed;
-            const accepted = data.rows[0].accepted_at;
-            //const estimated_time =
-            res.render('confirmation', {completed, accepted});
-          })
-          .catch(err => {
-            res
-              .status(500)
-              .json({ error: err.message });
-          });
+    db.query(query, [orderId])
+      .then(data => {
+        const completed = data.rows[0].completed;
+        const accepted = data.rows[0].accepted_at;
+        console.log(completed);
+        console.log(accepted);
+        res.render('confirmation', { completed, accepted });
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
+
 
   });
 
