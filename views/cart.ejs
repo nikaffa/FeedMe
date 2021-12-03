@@ -23,20 +23,24 @@
 <body>
   <%- include('./partials/_header') %>
   <div class="container_cart">
-
+    <div class="total_cart">
   <% for(i=0; i < orderItems.length; i++) { %>
     <div class="cart_order">
       <h3><%= orderItems[i].name %></h3>
       <h3>$<%= (orderItems[i].price/100).toFixed(2) %></h3>
       <h3><%= orderItems[i].quantity %></h3>
+      
 
       <form action="/cart/remove" method="post">
         <input type="hidden" name="item_id" value="<%= orderItems[i].order_item_id %>"/>
+        <div class="cartOrder_bottom">
         <button type="submit">Remove</button>
       </form>
       <h3 class="total">Item Total $<%= ((orderItems[i].price * orderItems[i].quantity)/100).toFixed(2) %></h3>
     </div>
+    </div>
   <% } %>
+  <div class = "total_cost">
     <h3 class="total">Subtotal $<%= subtotal.toFixed(2) %></h3>
     <h3 class="total">Tax $<%= (subtotal * .05).toFixed(2) %></h3>
     <h2 class="total">Total $<%= (subtotal + (subtotal * .05)).toFixed(2) %></h2>
@@ -45,11 +49,14 @@
     <form action="/cart/place_order" method="post">
       <label for="specialInstructions">Special Instructions</label>
       <input type="text" name="specialInstructions">
-
+      
       <button id="submitOrder" type="submit">Place Order</button>
     </form>
+  
   </div>
+  </div>
+  <div class="footer">
   <%- include('./partials/_footer') %>
-
+  </div>
 </body>
 </html>

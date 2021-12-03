@@ -12,6 +12,7 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "cookie-parser": "^1.4.6",
     "dotenv": "^2.0.0",
@@ -21,7 +22,7 @@
     "pg": "^8.7.1",
     "pg-native": "^3.0.0",
     "sass": "^1.44.0",
-    "twilio": "^3.71.2"
+    "twilio": "^3.71.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
