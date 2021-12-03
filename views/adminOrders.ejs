@@ -66,8 +66,8 @@
               <% } %>
               <% } %>
               <form action="/orders/accept/<%= incomingOrderNums[i].id %>" method="post">
-                <label>Set Estimated Completion</label>
-                <input type="text">
+                <label for="estimated_time">Set Estimated Completion</label>
+                <input type="text" name="estimated_time">
                 <button type="submit">Accept</button>
               </form>
             </div>
