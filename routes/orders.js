@@ -54,6 +54,7 @@ module.exports = (db) => {
   });
 
   router.post("/accept/:id", (req, res) => { //if accepted
+    console.log('req.params', req.params);
     const query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP
     WHERE id = $1 AND type = 'order'`;
     db.query(query, [req.params.id])

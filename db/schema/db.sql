@@ -32,6 +32,7 @@ CREATE TABLE orders (
   accepted_at TIMESTAMP,
   special_instructions TEXT,
   completed BOOLEAN DEFAULT FALSE,
+  completion_time INTEGER DEFAULT 0,
   type VARCHAR(255) NOT NULL
 );
 

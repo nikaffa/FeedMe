@@ -16,19 +16,18 @@ module.exports = (db) => {
     db.query(`SELECT * FROM users WHERE id = $1`, [req.params.id])
       .then(data => {
         const users = data.rows;
-
         res.cookie("user_id", users[0].id); //sets up a cookie
         const userId = req.params.id;
-        console.log(userId);
+        //pull out user's cart if exists
         const query = `
         SELECT id FROM orders
         WHERE user_id = $1 AND type='cart'
         `;
         db.query(query, [userId])
           .then(data => {
-            //console.log('data.rows', data.rows);
+            console.log('you have cart ', data.rows);
             if (!data.rows.length) {
-              console.log("no orders of this user");
+              console.log("no cart for this user, gonna create a new cart for you");
               //creating a new cart
               const query = `
               INSERT INTO orders(user_id, type)
@@ -45,16 +44,16 @@ module.exports = (db) => {
                     .json({ error: err.message });
                 });
             }
+            console.log("your cart: ", data.rows[0]);
+            res.redirect("/");
           });
-
-        res.redirect("/"); //client page
+        //res.redirect / was here
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
       });
-
   });
   return router;
 };
