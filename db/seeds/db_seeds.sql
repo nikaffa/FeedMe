@@ -31,3 +31,4 @@ VALUES
 (11, 'Drinks', 'Jasmine Green Tea', 'Antioxidant rich, with organic soba and wild grown yaupon', 2000, 'https://images.ctfassets.net/eum7w7yri3zr/2jHOZmyz32YglnVD4E0Cgv/94f7aaf703675ae8c532111412958cc0/menu_jasmine_green_tea_front_digital_evergreen.jpg?w=600&q=75'),
 (12, 'Drinks', 'Kombucha Apple', 'Effervescent probiotic tea brewed with a hint of apple cider', 3500, 'https://images.ctfassets.net/eum7w7yri3zr/6GI214xbY5YdQewcY23bWG/53db0deaef6d249ce4ce553e0aaa5773/menu_health-ade_kombucha_pink_lady_apple_front_digital_evergreen.jpg?w=600&q=75');
 
+
