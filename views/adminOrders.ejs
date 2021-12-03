@@ -57,19 +57,13 @@
             <h2>Order#: <%= incomingOrderNums[i].id %></h2>
               <% for(j=0; j < incomingOrders.length; j++) { %>
               <% if(incomingOrders[j].order_id === incomingOrderNums[i].id) {%>
-<<<<<<< HEAD
-=======
 
->>>>>>> 53e7d3a1c2f0752691febb2a7950ecb60d039747
               <h3><%= incomingOrders[j].name %></h3>
               <h4>Price: $<%= (incomingOrders[j].price/100).toFixed(2) %></h4>
               <h4>Qty: <%= incomingOrders[j].quantity%></h4>
               <% } %>
               <% } %>
-<<<<<<< HEAD
               <h4>Special instructions: <%= incomingOrders[i].special_instructions%></h4>
-=======
->>>>>>> 53e7d3a1c2f0752691febb2a7950ecb60d039747
               <form action="/orders/accept/<%= incomingOrderNums[i].id %>" method="post">
                 <label>Set Estimated Completion</label>
                 <input type="text">
