@@ -14,15 +14,13 @@ module.exports = (db) => {
       res.send("You are admin");
     }
     const user = req.cookies.user_id;
-    const userId = req.cookies.user_id;
-    console.log('userId ', userId);
+    const userId = req.cookies.user_id; //duplicate, should fix later
     const query = `
     SELECT id FROM orders
     WHERE user_id = $1 AND type='cart'
     `;
     db.query(query, [userId])
       .then(data => {
-        console.log('data: ', data);
         const query = `
         SELECT orders.id as orderId, items.name, quantity, price, special_instructions, order_items.id as order_item_id FROM items
         JOIN order_items ON items.id = item_id
@@ -32,6 +30,7 @@ module.exports = (db) => {
         `;
         db.query(query, [data.rows[0].id])
           .then((d) => {
+            console.log(' your current cart', d.rows);
             let subtotal = 0;
             for (let i = 0; i < d.rows.length; i++) {
               subtotal += (d.rows[i].price * d.rows[i].quantity) / 100;
