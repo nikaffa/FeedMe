@@ -65,7 +65,6 @@ app.get("/", (req, res) => {
       const bowls = all[0].rows;
       const salads = all[1].rows;
       const drinks = all[2].rows;
-      console.log(bowls, salads, drinks);
       const templateVars = {
         bowls, salads, drinks
       };
