@@ -47,7 +47,6 @@ module.exports = (db) => {
             console.log("your cart: ", data.rows[0]);
             res.redirect("/");
           });
-        //res.redirect / was here
       })
       .catch(err => {
         res

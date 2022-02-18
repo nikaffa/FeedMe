@@ -7,22 +7,16 @@
 
 require('dotenv').config();
 
+// Enable twilio for production
+// const twilio = require('twilio')(accountSid, authToken);
 // const accountSid = process.env.TWILIO_ACCOUNT_SID;
 // const authToken = process.env.TWILIO_AUTH_TOKEN;
 // const twilioNumber = process.env.TWILIO_NUMBER;
-
 // const resturantNumber = process.env.RESTAURANT_NUMBER;
+// const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
 
-
-// const twilio = require('twilio')(accountSid, authToken);
-
-const bodyParser = require('body-parser');
 const express = require('express');
 const router  = express.Router();
-// const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
-const app = express();
-// const parse = bodyParser.urlencoded('utf-8', {extended: false})
-
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -79,7 +73,6 @@ module.exports = (db) => {
       .then(data => {
         console.log(data);
         res.redirect("/orders");
-        //update at front-end
         //send 1st notification
         console.log(req.params)
 
@@ -98,7 +91,6 @@ module.exports = (db) => {
       .then(data => {
         console.log(data);
         res.redirect("/orders");
-        //update at front-end
         //send 2st notification
         // messageOrderReady(req.params.id);
       })

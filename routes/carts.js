@@ -10,15 +10,13 @@ const router = express.Router();
 
 require('dotenv').config();
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const twilioNumber = process.env.TWILIO_NUMBER;
-
-const resturantNumber = process.env.RESTAURANT_NUMBER;
-
+// Enable twilio for production
 
 // const twilio = require('twilio')(accountSid, authToken);
-
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const twilioNumber = process.env.TWILIO_NUMBER;
+// const resturantNumber = process.env.RESTAURANT_NUMBER;
 // const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
 
 module.exports = (db) => {
@@ -27,7 +25,7 @@ module.exports = (db) => {
       res.send("You are admin");
     }
     const user = req.cookies.user_id;
-    const userId = req.cookies.user_id; //duplicate, should fix later
+    const userId = req.cookies.user_id;
     const query = `
     SELECT id FROM orders
     WHERE user_id = $1 AND type='cart'
@@ -111,7 +109,7 @@ module.exports = (db) => {
     WHERE id = $1
     `;
     db.query(query, [itemId])
-      .then(data => {
+      .then(() => {
         return res.redirect("/cart");
       })
       .catch(err => {
@@ -186,11 +184,11 @@ module.exports = (db) => {
     db.query(query, [orderId])
       .then(data => {
         const completed = data.rows[0].completed;
-        const completion_time = data.rows[0].completion_time
+        const completionTime = data.rows[0].completion_time;
         const accepted = data.rows[0].accepted_at;
         console.log(completed);
         console.log(accepted);
-        res.render('confirmation', { completed, accepted, completion_time });
+        res.render('confirmation', { completed, accepted, completionTime });
       })
       .catch(err => {
         res
