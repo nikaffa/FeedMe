@@ -1,10 +1,10 @@
 
-$main-color: #E8EBF7;
-$accent-color1: #386641;
+$main-color: #f4f3e7;
+$accent-color1: #2d6b52;
 $accent-color2: #6A994E;
-$accent-color3: #704C5E;
-$header-font: 'Nunito Sans', sans-serif;
-$main-font: "EB Garamond";
+$accent-color3: #0e150e;
+$header-font: "Grenette Pro",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+$main-font: system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
 
 body {
   justify-content: center;
@@ -26,10 +26,10 @@ header {
   background-color: $accent-color1;
   color: $main-color;
   font-family: $header-font;
-  height: 100px;
+  height: 80px;
 }
 header img {
-  height: 80%;
+  height: 100%;
 }
 
 footer {
@@ -41,7 +41,7 @@ header a {
   color: $main-color;
   padding: 5px;
   text-decoration: none;
-  font-size: 1em;
+  font-size: 1.5em;
 }
 
 header a:hover {
