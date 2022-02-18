@@ -7,19 +7,19 @@
 
 require('dotenv').config();
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const twilioNumber = process.env.TWILIO_NUMBER;
+// const accountSid = process.env.TWILIO_ACCOUNT_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const twilioNumber = process.env.TWILIO_NUMBER;
 
-const resturantNumber = process.env.RESTAURANT_NUMBER;
+// const resturantNumber = process.env.RESTAURANT_NUMBER;
 
 
-const twilio = require('twilio')(accountSid, authToken);
+// const twilio = require('twilio')(accountSid, authToken);
 
 const bodyParser = require('body-parser');
 const express = require('express');
 const router  = express.Router();
-const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
+// const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
 const app = express();
 // const parse = bodyParser.urlencoded('utf-8', {extended: false})
 
@@ -71,7 +71,7 @@ module.exports = (db) => {
 
   router.post("/accept/:id", (req, res) => { //if accepted
     console.log('req.params', req.params);
-    messageCustomer(req.params.id, req.body.estimated_time)
+    // messageCustomer(req.params.id, req.body.estimated_time)
 
     const query = `UPDATE orders SET accepted_at = CURRENT_TIMESTAMP, completion_time = $1
     WHERE id = $2 AND type = 'order'`;
@@ -100,7 +100,7 @@ module.exports = (db) => {
         res.redirect("/orders");
         //update at front-end
         //send 2st notification
-        messageOrderReady(req.params.id);
+        // messageOrderReady(req.params.id);
       })
       .catch(err => {
         res

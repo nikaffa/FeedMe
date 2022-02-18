@@ -17,9 +17,9 @@ const twilioNumber = process.env.TWILIO_NUMBER;
 const resturantNumber = process.env.RESTAURANT_NUMBER;
 
 
-const twilio = require('twilio')(accountSid, authToken);
+// const twilio = require('twilio')(accountSid, authToken);
 
-const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
+// const {messageCustomer, messageRestaurant, messageOrderReady } = require('./twilio')
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -153,7 +153,7 @@ module.exports = (db) => {
 
                 res.redirect('confirmation/' + orderId);
 
-                messageRestaurant(data.rows[0].id)
+                // messageRestaurant(data.rows[0].id)
               })
               .catch(err => {
                 res
