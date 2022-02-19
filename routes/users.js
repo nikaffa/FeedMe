@@ -21,22 +21,17 @@ module.exports = (db) => {
         //pull out user's cart if exists
         const query = `
         SELECT id FROM orders
-        WHERE user_id = $1 AND type='cart'
-        `;
+                WHERE user_id = $1 AND type='cart'`;
         db.query(query, [userId])
           .then(data => {
-            console.log('you have cart ', data.rows);
             if (!data.rows.length) {
-              console.log("no cart for this user, gonna create a new cart for you");
               //creating a new cart
               const query = `
               INSERT INTO orders(user_id, type)
-              VALUES($1, 'cart')
-              RETURNING *;
-              `;
+                      VALUES($1, 'cart')
+                      RETURNING *;`;
               db.query(query, [userId])
-                .then(data => {
-                  console.log("new cart created: ", data.rows[0]);
+                .then(() => {
                 })
                 .catch(err => {
                   res
@@ -44,10 +39,8 @@ module.exports = (db) => {
                     .json({ error: err.message });
                 });
             }
-            console.log("your cart: ", data.rows[0]);
             res.redirect("/");
           });
-        //res.redirect / was here
       })
       .catch(err => {
         res
